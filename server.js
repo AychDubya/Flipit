@@ -2,6 +2,7 @@ const express = require("express");
 var exphbs = require("express-handlebars");
 
 const db = require("./models");
+const seed = require("./seeds.js");
 
 // Express Settings
 const app = express();
@@ -18,17 +19,17 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-// Routes
-require("./routes/api-routes.js")(app);
-require("./routes/html-routes.js")(app);
-
-// or
-var routes = require("./controllers/controller.js");
-app.use(routes);
+// * Routes
+// * uncomment routes when built
+// var apiRoutes = require("./controllers/api-controller.js");
+// app.use(apiRoutes);
+// var htmlRoutes = require("./controllers/html-controller.js");
+// app.use(htmlRoutes);
 
 const PORT = process.env.PORT || 8080;
 
 db.sequelize.sync({ force: true }).then(function () {
+  seed();
   app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
   });
