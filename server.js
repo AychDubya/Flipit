@@ -2,6 +2,7 @@ const express = require("express");
 var exphbs = require("express-handlebars");
 
 const db = require("./models");
+const seed = require("./seeds.js");
 
 // Express Settings
 const app = express();
@@ -28,6 +29,7 @@ app.set("view engine", "handlebars");
 const PORT = process.env.PORT || 8080;
 
 db.sequelize.sync({ force: true }).then(function () {
+  seed();
   app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
   });
