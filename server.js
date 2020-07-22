@@ -18,13 +18,11 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-// Routes
-require("./routes/api-routes.js")(app);
-require("./routes/html-routes.js")(app);
-
-// or
-var routes = require("./controllers/controller.js");
-app.use(routes);
+// * Routes
+var apiRoutes = require("./controllers/api-controller.js");
+app.use(apiRoutes);
+var htmlRoutes = require("./controllers/html-controller.js");
+app.use(htmlRoutes);
 
 const PORT = process.env.PORT || 8080;
 
