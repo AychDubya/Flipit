@@ -19,10 +19,11 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // * Routes
-var apiRoutes = require("./controllers/api-controller.js");
-app.use(apiRoutes);
-var htmlRoutes = require("./controllers/html-controller.js");
-app.use(htmlRoutes);
+// * uncomment routes when built
+// var apiRoutes = require("./controllers/api-controller.js");
+// app.use(apiRoutes);
+// var htmlRoutes = require("./controllers/html-controller.js");
+// app.use(htmlRoutes);
 
 const PORT = process.env.PORT || 8080;
 
