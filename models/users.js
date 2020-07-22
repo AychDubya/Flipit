@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  var User = sequelize.define("User", {
+  let User = sequelize.define("User", {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -14,5 +14,11 @@ module.exports = function (sequelize, DataTypes) {
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
   });
+  User.associate = function (models) {
+    User.hasMany(models.Deck, {
+      onDelete: "cascade"
+    })
+    User.belongsToMany(models.Deck, {through: 'SavedDeck'});
+  }
   return User;
 };
