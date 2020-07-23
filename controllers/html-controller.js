@@ -5,7 +5,7 @@ const db = require("../models");
 const _ = require("lodash");
 
 
-
+// Home page
 router.get("/", function (req, res) {
   db.Category.findAll().then(function(categories) {
     const randomCategories = _.sampleSize(categories, 3).map(cat => {
@@ -15,7 +15,7 @@ router.get("/", function (req, res) {
   });
 });
 
-// * /search?deck=German%20Nouns&category=4&userId=
+// Search Results page
 router.get("/search", async function (req, res) {
   const { deck, category, userId } = req.query;
   let results;
@@ -53,46 +53,68 @@ router.get("/search", async function (req, res) {
   res.json(filteredResults);
 });
 
+// Profile page
+router.get("/user/:id", function (req, res) {
+  console.log(req.params)
+  db.User.findOne({
+    where: {
+      id: req.params.id,
+    }
+  }).then(async function (user) {
+    const userDecks = await user.getDecks();
+    res.json(userDecks);
+  });
+});
+
+// Login page
 router.get("/login", function (req, res) {
   res.send("Login");
 });
 
+// Register Page
 router.get("/register", function (req, res) {
   res.send("Register");
 });
 
+// View deck page
 router.get("/deck/:id", function (req, res) {
-  res.send("deck search");
+  db.Deck.findOne({
+    where: {
+      id: req.params.id,
+    }
+  }).then(function (deck) {
+    db.Card.findAll({
+      where: {
+        DeckId: deck.id,
+      }
+    }).then(function(deckCards) {
+      const deckData = {
+        deck: deck,
+        cards: deckCards,
+      };
+      res.json(deckData);
+    })
+  });
 });
 
+// Study page
 router.get("/study/:deckId", function (req, res) {
-  res.send(req.params.deckId);
+  db.Card.findAll({
+    where: {
+      DeckId: req.params.deckId,
+    }
+  }).then(function (cards) {
+    res.json(cards);
+  });
 });
+
+// Error page
+router.get("/error", function (req, res) {
+  res.send(req.body.message);
+});
+
+router.get("/team", function(req, res) {
+  res.send("Team");
+})
 
 module.exports = router;
-
-
-
-
-router.get("/api/new_deck/private", function (req, res) {
-  db.Deck.findAll({
-      where: {
-          private: true 
-      }
-  }).then(function (dbUser) {
-      res.json(dbUser);
-  }).catch(function(err){
-      res.status(500).json(err)
-  });
-});
-router.get("/api/new_deck/public", function (req, res) {
-  db.Deck.findAll({
-      where: {
-          private: false 
-      }
-  }).then(function (dbUser) {
-      res.json(dbUser);
-  }).catch(function(err){
-      res.status(500).json(err)
-  });
-});
