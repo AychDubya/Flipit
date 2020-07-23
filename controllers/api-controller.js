@@ -3,13 +3,15 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 
-// USER API ROUTES
+// * USER API ROUTES
+// Get all users
 router.get("/api/users", function (req, res) {
     db.User.findAll({}).then(function (dbUser) {
         res.json(dbUser);
     });
 });
 
+// Create new user
 router.post("/api/users", function (req, res) {
     db.User.create({
         username: req.body.username,
@@ -22,6 +24,7 @@ router.post("/api/users", function (req, res) {
     });
 });
 
+// Delete user
 router.delete("/api/users/:id", function (req, res) {
     db.User.destroy({
         where: {
@@ -32,7 +35,7 @@ router.delete("/api/users/:id", function (req, res) {
     });
 });
 
-// CHECK BACK WHEN FORM IS COMPLETE
+// Change password
 router.put("/api/users", function (req, res) {
     db.User.update({
         password: req.body.password,
@@ -43,31 +46,8 @@ router.put("/api/users", function (req, res) {
     }).res.json(dbUser)
 });
 
-// NEW DECK ROUTE
-// router.get("/api/new_deck/private", function (req, res) {
-//     db.Deck.findAll({
-//         where: {
-//             private: true 
-//         }
-//     }).then(function (dbUser) {
-//         res.json(dbUser);
-//     }).catch(function(err){
-//         res.status(500).json(err)
-//     });
-// });
-// router.get("/api/new_deck/public", function (req, res) {
-//     db.Deck.findAll({
-//         where: {
-//             private: false 
-//         }
-//     }).then(function (dbUser) {
-//         res.json(dbUser);
-//     }).catch(function(err){
-//         res.status(500).json(err)
-//     });
-// });
-
-// NEW DECK ROUTE
+// * DECK API ROUTES
+// Create new deck
 router.post("/api/new_deck", function (req, res) {
     db.Deck.create({
         name: req.body.name,
@@ -82,7 +62,8 @@ router.post("/api/new_deck", function (req, res) {
         res.status(500).json(err)
     })
 });
-// DELETE DECK BY ID
+
+// Delete deck by id
 router.delete("/api/delete_deck/:id", function (req, res) {
     db.Deck.destroy({
         where: {
@@ -93,7 +74,8 @@ router.delete("/api/delete_deck/:id", function (req, res) {
     });
 });
 
-// STARRED DECK ROUTE
+// * STARREDDECK API ROUTES
+// Star a deck as user
 router.post("/api/star_deck/:userId/:deckId", function (req, res) {
     db.User.findOne({
        where: {
@@ -107,7 +89,8 @@ router.post("/api/star_deck/:userId/:deckId", function (req, res) {
     })
 });
 
-// NEW CARD ROUTE
+// * CARD API ROUTES
+// New card route
 router.post("/api/new_card", function (req, res) {
     db.Card.create({
       question: req.body.question,
@@ -120,6 +103,7 @@ router.post("/api/new_card", function (req, res) {
     });
 });
 
+// Delete card route
 router.delete("/api/delete_card/:id", function (req, res) {
     db.Card.destroy({
         where: {
@@ -132,7 +116,7 @@ router.delete("/api/delete_card/:id", function (req, res) {
     });
 });
 
-// CHECK BACK WHEN FORM IS COMPLETE
+// Update card route
 router.put("/api/update_card/:id", function (req, res) {
     db.Card.update({
         question: req.body.question,
@@ -147,4 +131,5 @@ router.put("/api/update_card/:id", function (req, res) {
         res.status(500).json(err)
     });
 });
+
 module.exports = router;

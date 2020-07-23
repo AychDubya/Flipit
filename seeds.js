@@ -26,8 +26,8 @@ module.exports = async function () {
     {
       username: "mikey",
       password: "password",
-      first_name: "Mike Shenk",
-      last_name: "Wyman",
+      first_name: "Mike",
+      last_name: "Shenk",
     },
   ])
 
@@ -66,13 +66,21 @@ module.exports = async function () {
       CategoryId: 11,
       CreatorId: 3,
     },
+    {
+      name: "Bay Area Stuff",
+      private: true,
+      CategoryId: 9,
+      CreatorId: 4,
+    },
   ])
 
   // Add decks to saved decks
+  // * https://sequelizedocs.fullstackacademy.com/many-many-associations/
   const users = await db.User.findAll();
   users[0].addDeck(1);
   users[1].addDeck(2);
   users[2].addDeck(3);
+  users[3].addDeck(4);
 
 
   db.Card.bulkCreate([
