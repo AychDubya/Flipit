@@ -46,6 +46,7 @@ module.exports = async function () {
     { name: "Trivia" }, 
   ])
 
+  // Add decks
   db.Deck.bulkCreate([
     {
       name: "German Nouns",
@@ -66,6 +67,13 @@ module.exports = async function () {
       CreatorId: 3,
     },
   ])
+
+  // Add decks to saved decks
+  const users = await db.User.findAll();
+  users[0].addDeck(1);
+  users[1].addDeck(2);
+  users[2].addDeck(3);
+
 
   db.Card.bulkCreate([
     {
@@ -94,9 +102,6 @@ module.exports = async function () {
       DeckId: 3
     },
   ])
-  
-  const users = await db.User.findAll();
-  const decks = await db.Deck.findAll();
 
-  users[0].addDeck(decks[2]);
+  users[0].addDeck(3);
 }
