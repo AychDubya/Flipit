@@ -17,4 +17,11 @@ module.exports = function () {
     first_name: "Andrew",
     last_name: "Bergstrom"
   })
+
+  db.User.create({
+    username: "hw1234",
+    password: "password",
+    first_name: "Hanny",
+    last_name: "dubya"
+  })
 }
