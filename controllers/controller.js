@@ -1,1 +1,0 @@
-// * Put all routes in the same controller (api & html)?
