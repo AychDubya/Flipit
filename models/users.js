@@ -15,10 +15,11 @@ module.exports = function (sequelize, DataTypes) {
     last_name: DataTypes.STRING,
   });
   User.associate = function (models) {
+    User.belongsToMany(models.Deck, {through: 'SavedDecks'});
     User.hasMany(models.Deck, {
-      onDelete: "cascade"
+      onDelete: "cascade",
+      foreignKey: 'CreatorId'
     })
-    User.belongsToMany(models.Deck, {through: 'SavedDeck'});
   }
   return User;
 };

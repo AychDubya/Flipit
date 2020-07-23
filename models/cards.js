@@ -17,14 +17,5 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
     });
-
-    Card.associate = function (models) {
-
-        Card.belongsTo(models.Deck, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };
     return Card;
 };
