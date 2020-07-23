@@ -98,6 +98,5 @@ module.exports = async function () {
   const users = await db.User.findAll();
   const decks = await db.Deck.findAll();
 
-
   users[0].addDeck(decks[2]);
 }

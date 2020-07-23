@@ -21,8 +21,8 @@ app.set("view engine", "handlebars");
 
 // * Routes
 // * uncomment routes when built
-// var apiRoutes = require("./controllers/api-controller.js");
-// app.use(apiRoutes);
+var apiRoutes = require("./controllers/api-controller.js");
+app.use(apiRoutes);
 // var htmlRoutes = require("./controllers/html-controller.js");
 // app.use(htmlRoutes);
 
