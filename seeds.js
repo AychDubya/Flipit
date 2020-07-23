@@ -56,7 +56,7 @@ module.exports = async function () {
     },
     {
       name: "Ichthyology",
-      private: false,
+      private: true,
       CategoryId: 10,
       CreatorId: 2,
     },
