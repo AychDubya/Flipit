@@ -13,6 +13,12 @@ module.exports = function (sequelize, DataTypes) {
     },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true,
+      }
+    }
   });
   User.associate = function (models) {
     User.belongsToMany(models.Deck, {through: 'SavedDecks'});

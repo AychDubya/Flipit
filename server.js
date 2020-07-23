@@ -20,17 +20,16 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // * Routes
-// * uncomment routes when built
-var apiRoutes = require("./controllers/api-controller.js");
+const apiRoutes = require("./controllers/api-controller.js");
 app.use(apiRoutes);
-// var htmlRoutes = require("./controllers/html-controller.js");
-// app.use(htmlRoutes);
+const htmlRoutes = require("./controllers/html-controller.js");
+app.use(htmlRoutes);
 
 const PORT = process.env.PORT || 8080;
 
 db.sequelize.sync({ force: true }).then(function () {
   seed();
   app.listen(PORT, function () {
-    console.log("App listening on PORT " + PORT);
+    console.log("App listening on http://localhost:" + PORT);
   });
 });
