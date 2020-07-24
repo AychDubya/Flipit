@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
   <title>FlipIt - Home</title>
@@ -22,14 +23,14 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-
+<!-- Denis was here -->
         </li>
         <li class="nav-item">
           <a class="nav-tab" href="index.html">HOME
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-tab" href="portfolio.html">My Study Stack
+          <a class="nav-tab" href="study-deck.html">My Study Stack
           </a>
         </li>
         <li class="nav-item dropdown">
@@ -46,51 +47,33 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-tab" href="contact.html" tabindex="-1" aria-disabled="true">My Account</a>
+          <a class="nav-tab" href="my-acct.html" tabindex="-1" aria-disabled="true">My Account</a>
         </li>
       </ul>
     </div>
   </nav>
 
 
-  <div class="container-sm body-container">
+  <div class="container-sm form-container">
     <h1 class="header-font">Welcome to FlipIt</h1>
-    <!-- <img src="Assets/Images/Headshots/linkedin-headshot.jpg" alt="Professional-headshot" class="float-left main-image"/> -->
-      <!-- <h5 class="bio-body">Professional Life</h5>
-    <p class="bio-body">
-      After graduating from UC Berkeley, I joined Enterprise Rent-A-Car in the Fall of
-      that year, where I rose through the ranks of their Management Trainee program and ultimately managed rental
-      operations at three major airports on the US west coast (San Francisco, Oakland, and Sea-Tac International airports) in addition
-      to a few local inner-city branches. Managing daily operations, sales, and customer service at each location helped
-      me develop my sales and service skills, as well as my business acumen. After four years of service at Enterprise,
-      I moved on to work for a home building/land development company in Bellevue, WA in the role of Land Acquistion
-      Specialist. The COVID-19 crisis of early 2020 has created this undesirable current scenario, but has provided my
-      the perfect opportunity to join the University of Washington Coding Bootcamp with <a href="https://bootcampspot.com/"
-      target="_blank"><u>BootCampSpot</u></a> and pursue a career in software/web development. I look forward to perfecting
-      my web development skills and create content that I am proud to showcase. Check out some of my creations in my <a href="https://mlshenk.github.io/homework-2/portfolio.html">Portfolio</a>!
-    </p>
-    <br>
-    <h5 class="bio-body">Early Life & College</h5>
-    <p class="bio-body">
-      I grew up in San Francisco, CA for twenty-six years before moving to Seattle, WA in August 2017. Sports have always been a big part of my life. I played baseball from
-      age 8 through my sophomore year of high school. At the beginning of that year, I was still recovering from
-      an injury sustained during my freshman year, so I decided to join a club rowing team in San Francisco. I
-      ultimately competed in competitive rowing for three years of high school and was recruited to row at UC Berkeley, where I graduated in in Spring 2014. 
-      <br>Go Bears!🐻 
-    </p> -->
+    <form class="my-2 my-lg-0" id="contact-info">
+      <h3>Begin studying and build your knowledge!</h3>
+    <form class="my-2 my-lg-0">
+      <div class="form-text">
+        <br>
+        <label>Search a subject! </label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="e.g. Spanish, History, Planets, etc...">
+      </div>
+      <br>
+    <button type="submit" class="btn btn-submit btn-sm float-center" formaction="study-deck.html">Explore</button>
   </div>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <div class="icon-bar">
-    <a href="https://www.linkedin.com/in/michaelshenk415" class="linkedin" title="LinkedIn" target="_blank"><i class="fa fa-linkedin"></i></a>
-    <a href="https://github.com/mlshenk" class="github" title="GitHub" target="_blank"><i class="fa fa-github"></i></a>
-    <a href="https://www.facebook.com/mike.shenk7" class="facebook" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a>
-    <a href="mike-shenk-resume-blue2020.pdf" class="Resume" title="Resume" target="_blank"><i class="fa fa-money"></i></a>
-  </div>
 
   <footer class="vw-auto vh-auto d-flex justify-content-center footerbar">
-    <p class="vw-auto vh-auto d-flex justify-content-center footer-header">Meet the FlipIt Team &#128101; </p>
+    <p class="vw-auto vh-auto d-flex justify-content-center footer-header">Meet the FlipIt Team &#128101;</p>
+    <br>
+    <p class="vw-auto vh-auto d-flex justify-content-center footer-header">Project FlipIt - July 2020</p>
   </footer>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
