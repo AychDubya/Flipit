@@ -11,7 +11,7 @@ router.get("/", function (req, res) {
     const randomCategories = _.sampleSize(categories, 3).map(cat => {
       return { id: cat.id, name: cat.name };
     });
-    res.send(JSON.stringify(randomCategories));
+    res.render("index", randomCategories);
   });
 });
 
@@ -50,7 +50,7 @@ router.get("/search", async function (req, res) {
       return item;
     }
   })
-  res.json(filteredResults);
+  res.render("search", filteredResults);
 });
 
 // Profile page
@@ -62,18 +62,18 @@ router.get("/user/:id", function (req, res) {
     }
   }).then(async function (user) {
     const userDecks = await user.getDecks();
-    res.json(userDecks);
+    res.render("profile", userDecks);
   });
 });
 
 // Login page
 router.get("/login", function (req, res) {
-  res.send("Login");
+  res.render("login");
 });
 
 // Register Page
 router.get("/register", function (req, res) {
-  res.send("Register");
+  res.render("register");
 });
 
 // View deck page
@@ -92,7 +92,7 @@ router.get("/deck/:id", function (req, res) {
         deck: deck,
         cards: deckCards,
       };
-      res.json(deckData);
+      res.render("deck", deckData);
     })
   });
 });
@@ -104,17 +104,18 @@ router.get("/study/:deckId", function (req, res) {
       DeckId: req.params.deckId,
     }
   }).then(function (cards) {
-    res.json(cards);
+    res.render("study", cards);
   });
 });
 
 // Error page
 router.get("/error", function (req, res) {
-  res.send(req.body.message);
+  res.render("error", req.body.message);
 });
 
+// Team page
 router.get("/team", function(req, res) {
-  res.send("Team");
+  res.render("Team");
 })
 
 module.exports = router;
