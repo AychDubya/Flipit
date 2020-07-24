@@ -1,35 +1,31 @@
-// ! To seed: node seeds.js
-
 // Access table
 const db = require("./models");
 
 module.exports = async function () {
-  db.User.bulkCreate([
-    {
-      username: "dwats",
-      password: "password",
-      first_name: "Derek",
-      last_name: "Watson",
-    },
-    {
-      username: "ab7",
-      password: "password",
-      first_name: "Andrew",
-      last_name: "Bergstrom",
-    },
-    {
-      username: "aych-dubya",
-      password: "password",
-      first_name: "Hannibal",
-      last_name: "Wyman",
-    },
-    {
-      username: "mikey",
-      password: "password",
-      first_name: "Mike",
-      last_name: "Shenk",
-    },
-  ])
+  db.User.Create({
+    username: "dwats",
+    password: "password",
+    first_name: "Derek",
+    last_name: "Watson",
+  });
+  db.User.Create({
+    username: "ab7",
+    password: "password",
+    first_name: "Andrew",
+    last_name: "Bergstrom",
+  });
+  db.User.Create({
+    username: "aych-dubya",
+    password: "password",
+    first_name: "Hannibal",
+    last_name: "Wyman",
+  });
+  db.User.Create({
+    username: "mikey",
+    password: "password",
+    first_name: "Mike",
+    last_name: "Shenk",
+  });
 
   db.Category.bulkCreate([
     { name: "Art" }, 
