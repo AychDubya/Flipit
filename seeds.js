@@ -1,26 +1,28 @@
+// ! To seed: node seeds.js
+
 // Access table
 const db = require("./models");
 
 module.exports = async function () {
-  db.User.Create({
+  await db.User.create({
     username: "dwats",
     password: "password",
     first_name: "Derek",
     last_name: "Watson",
   });
-  db.User.Create({
+  await db.User.create({
     username: "ab7",
     password: "password",
     first_name: "Andrew",
     last_name: "Bergstrom",
   });
-  db.User.Create({
+  await db.User.create({
     username: "aych-dubya",
     password: "password",
     first_name: "Hannibal",
     last_name: "Wyman",
   });
-  db.User.Create({
+  await db.User.create({
     username: "mikey",
     password: "password",
     first_name: "Mike",
