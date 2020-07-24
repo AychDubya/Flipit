@@ -3,15 +3,21 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const _ = require("lodash");
+const bcrypt = require('bcrypt');
+const moment = require('moment');
+
+function sessionObject(user, data) {
+  return { user, data };
+}
 
 
 // Home page
-router.get("/", function (req, res) {
+router.get(["/", "/index", "/home"], function (req, res) {
   db.Category.findAll().then(function(categories) {
     const randomCategories = _.sampleSize(categories, 3).map(cat => {
       return { id: cat.id, name: cat.name };
     });
-    res.render("index", randomCategories);
+    res.render("index", sessionObject(req.session.user, randomCategories));
   });
 });
 
@@ -50,36 +56,67 @@ router.get("/search", async function (req, res) {
       return item;
     }
   })
-  res.render("search", filteredResults);
+  res.render("search", sessionObject(req.session.user, filteredResults));
 });
 
 // Profile page
-router.get("/user/:id", function (req, res) {
-  console.log(req.params)
-  db.User.findOne({
-    where: {
-      id: req.params.id,
-    }
-  }).then(async function (user) {
-    const userDecks = await user.getDecks();
-    const userInfo = {
-      user: user.toJSON(),
-      userDecks: userDecks.map(deck => deck.toJSON()),
-    };
-    console.log(userInfo)
-    res.render("profile", userInfo);
-  });
+router.get("/profile", function (req, res) {
+  if(req.session.user){
+    db.User.findOne({
+      where: {
+        id: req.session.user.id,
+      }
+    }).then(async function (user) {
+      const rawDecks = await user.getDecks();
+      const decks = rawDecks.map(deck => deck.toJSON());
+      res.render("profile", sessionObject(req.session.user, decks));
+    });
+  } else {
+    res.status(401).render("error", sessionObject(
+      req.session.user,
+      {message: "Please login to view profile.", link: "login"}
+    ));
+  }
 });
 
 // Login page
 router.get("/login", function (req, res) {
-  res.render("login");
+  res.render("login", sessionObject(req.session.user, {}));
 });
+
+router.post('/login',(req,res)=>{
+  db.User.findOne({
+    where: {
+      username: req.body.username,
+    }
+  }).then(user=>{
+    if (!user) {
+      return res.status(404).render("error", {message: "no such user"})
+    } else {
+      if(bcrypt.compareSync(req.body.password, user.password)){
+        req.session.user = {
+          id: user.id,
+          username: user.username,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email
+        }
+        res.redirect(`profile`);
+      } else {
+        res.status(401).send("wrong password");
+      }
+    }
+  }).catch( err => {
+    console.log(err)
+    return res.status(500).end();
+  })
+})
 
 // Register Page
 router.get("/register", function (req, res) {
-  res.render("register");
+  res.render("register", sessionObject(req.session.user, {}));
 });
+// * to create new use POST /api/users with a req.body
 
 // View deck page
 router.get("/deck/:id", function (req, res) {
@@ -97,7 +134,7 @@ router.get("/deck/:id", function (req, res) {
         deck: deck.toJSON(),
         cards: deckCards.map(card => card.toJSON()),
       };
-      res.render("deck", deckData);
+      res.render("deck", sessionObject(req.session.user, deckData));
     })
   });
 });
@@ -109,13 +146,13 @@ router.get("/study/:deckId", function (req, res) {
       DeckId: req.params.deckId,
     }
   }).then(function (cards) {
-    res.render("study", cards);
+    res.render("study", sessionObject(req.session.user, cards));
   });
 });
 
 // Error page
 router.get("/error", function (req, res) {
-  res.render("error", req.body.message);
+  res.render("error", sessionObject(req.session.user, {message: "An error has occured", link: "home"}));
 });
 
 // Team page
