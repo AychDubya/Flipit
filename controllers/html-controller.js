@@ -62,7 +62,12 @@ router.get("/user/:id", function (req, res) {
     }
   }).then(async function (user) {
     const userDecks = await user.getDecks();
-    res.render("profile", userDecks);
+    const userInfo = {
+      user: user.toJSON(),
+      userDecks: userDecks.map(deck => deck.toJSON()),
+    };
+    console.log(userInfo)
+    res.render("profile", userInfo);
   });
 });
 
@@ -89,8 +94,8 @@ router.get("/deck/:id", function (req, res) {
       }
     }).then(function(deckCards) {
       const deckData = {
-        deck: deck,
-        cards: deckCards,
+        deck: deck.toJSON(),
+        cards: deckCards.map(card => card.toJSON()),
       };
       res.render("deck", deckData);
     })
