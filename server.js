@@ -33,7 +33,7 @@ app.use(htmlRoutes);
 
 
 db.sequelize.sync({ force: true }).then(function () {
-  seed();
+  //seed();
   app.listen(PORT, function () {
     console.log("App listening on http://localhost:" + PORT);
   });
