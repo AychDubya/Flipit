@@ -19,6 +19,9 @@
     "nodemailer": "^6.4.10",
     "sequelize": "^6.3.3"
   },
+  "devDependencies": {
+    "handlebars-helper-css": "^0.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AychDubya/Flipit.git"
