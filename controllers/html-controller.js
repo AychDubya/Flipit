@@ -5,11 +5,16 @@ const db = require("../models");
 const _ = require("lodash");
 const bcrypt = require('bcrypt');
 const moment = require('moment');
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
-function sessionObject(user, data) {
-  return { user, data };
+function sessionObject(req, data = {}) {
+  return { user: req.session.user, data };
 }
 
+function formatDate(date) {
+  return moment(date).format("MM/DD/YY");
+}
 
 // Home page
 router.get(["/", "/index", "/home"], function (req, res) {
@@ -17,7 +22,7 @@ router.get(["/", "/index", "/home"], function (req, res) {
     const randomCategories = _.sampleSize(categories, 3).map(cat => {
       return { id: cat.id, name: cat.name };
     });
-    res.render("index", sessionObject(req.session.user, randomCategories));
+    res.render("index", sessionObject(req, randomCategories));
   });
 });
 
@@ -56,7 +61,7 @@ router.get("/search", async function (req, res) {
       return item;
     }
   })
-  res.render("search", sessionObject(req.session.user, filteredResults));
+  res.render("search", sessionObject(req, filteredResults));
 });
 
 // Profile page
@@ -69,7 +74,7 @@ router.get("/profile", function (req, res) {
     }).then(async function (user) {
       const rawDecks = await user.getDecks();
       const decks = rawDecks.map(deck => deck.toJSON());
-      res.render("profile", sessionObject(req.session.user, decks));
+      res.render("profile", sessionObject(req, decks));
     });
   } else {
     res.status(401).render("error", sessionObject(
@@ -81,7 +86,7 @@ router.get("/profile", function (req, res) {
 
 // Login page
 router.get("/login", function (req, res) {
-  res.render("login", sessionObject(req.session.user, {}));
+  res.render("login", sessionObject(req));
 });
 
 router.post('/login',(req,res)=>{
@@ -113,29 +118,46 @@ router.post('/login',(req,res)=>{
 })
 
 // Register Page
+// to create new user POST /api/users with a req.body
 router.get("/register", function (req, res) {
-  res.render("register", sessionObject(req.session.user, {}));
+  res.render("register", sessionObject(req));
 });
-// * to create new use POST /api/users with a req.body
 
 // View deck page
 router.get("/deck/:id", function (req, res) {
   db.Deck.findOne({
     where: {
       id: req.params.id,
+    }, 
+    include: {
+      model: db.User,
+      where: {
+        id: {
+          [Op.col]: "Deck.CreatorId"
+        }
+      }
     }
   }).then(function (deck) {
-    db.Card.findAll({
-      where: {
-        DeckId: deck.id,
-      }
-    }).then(function(deckCards) {
-      const deckData = {
-        deck: deck.toJSON(),
-        cards: deckCards.map(card => card.toJSON()),
-      };
-      res.render("deck", sessionObject(req.session.user, deckData));
-    })
+    if (deck.private === true && req.session.id !== deck.CreatorId) {
+      res.render("error", sessionObject(req, { message: "This deck is private", link: "home"}))
+    } else {
+      db.Card.findAll({
+        where: {
+          DeckId: deck.id,
+        }
+      }).then(function(deckCards) {
+        const deckData = {
+          deck: {
+            name: deck.name,
+            createdAt: formatDate(deck.createdAt),
+          },
+          user: deck.Users[0].toJSON(),
+          cards: deckCards.map(card => card.toJSON()),
+        };
+        console.log(deckData);
+        res.render("deck", sessionObject(req, deckData));
+      })
+    }
   });
 });
 
@@ -146,18 +168,18 @@ router.get("/study/:deckId", function (req, res) {
       DeckId: req.params.deckId,
     }
   }).then(function (cards) {
-    res.render("study", sessionObject(req.session.user, cards));
+    res.render("study", sessionObject(req, cards.map(card => card.toJSON())));
   });
 });
 
-// Error page
+// Error pageb
 router.get("/error", function (req, res) {
-  res.render("error", sessionObject(req.session.user, {message: "An error has occured", link: "home"}));
+  res.render("error", sessionObject(req, {message: "An error has occured", link: "home"}));
 });
 
 // Team page
 router.get("/team", function(req, res) {
-  res.render("Team");
+  res.render("Team", sessionObject(req));
 })
 
 module.exports = router;
