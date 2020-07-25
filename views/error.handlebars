@@ -1,2 +1,8 @@
   {{> navbar }}
-  <h1>Error page</h1>
+  <h2>{{data.message}}</h2>
+  <button><a href="{{data.link}}">{{data.link}}</a></button>
+  {{#if user}}
+  <h3>Logged in</h3>
+  {{else}}
+  <h3>Not logged in</h3>
+  {{/if}}
