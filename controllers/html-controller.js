@@ -6,10 +6,20 @@ const _ = require("lodash");
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 const Sequelize = require("sequelize");
+const session = require("express-session");
 const Op = Sequelize.Op;
 
 function sessionObject(req, data = {}) {
-  return { user: req.session.user, data };
+  const user = req.session.user 
+    ? req.session.user
+    : {
+      id: "",
+      username: null,
+      first_name: null,
+      last_name: null,
+      email: null
+    };
+  return { user, data };
 }
 
 function formatDate(date) {
@@ -19,61 +29,112 @@ function formatDate(date) {
 // Home page
 router.get(["/", "/index", "/home"], function (req, res) {
   db.Category.findAll().then(function(categories) {
-    const randomCategories = _.sampleSize(categories, 3).map(cat => {
+    const randomCats = _.sampleSize(categories, 3).map(cat => {
       return { id: cat.id, name: cat.name };
     });
-    res.render("index", sessionObject(req, randomCategories));
+    const allCats = categories.map(cat => {
+      return { id: cat.id, name: cat.name };
+    });
+    const data = { explore: randomCats, categories: allCats };
+    res.render("index", sessionObject(req, data));
   });
 });
 
 // Search Results page
 router.get("/search", async function (req, res) {
-  const { deck, category, userId } = req.query;
-  let results;
-  if (deck && category) {
-    results = await db.Deck.findAll({
-      where: {
-        name: deck,
-        CategoryId: category,
-      }
-    });
-  } else if (deck && !category) {
-    results = await db.Deck.findAll({
-      where: {
-        name: deck,
-      }
-    });
-  } else if (category && !deck) {
-    results = await db.Deck.findAll({
-      where: {
-        CategoryId: category,
-      }
-    });
-  } else if (!category && !deck) {
-    results = await db.Deck.findAll();
-  }
+  const { deck, category } = req.query;
+  const results = await (async function() {
+    if (deck && category) {
+      return await db.Deck.findAll({
+        where: {
+          name: deck,
+          CategoryId: parseInt(category),
+        },
+        include: {
+          model: db.User,
+          where: {
+            id: {
+              [Op.col]: "Deck.CreatorId"
+            }
+          }
+        },
+      });
+    } else if (deck && !category) {
+      return await db.Deck.findAll({
+        where: {
+          name: deck,
+        },
+        include: {
+          model: db.User,
+          where: {
+            id: {
+              [Op.col]: "Deck.CreatorId"
+            }
+          }
+        },
+      });
+    } else if (category && !deck) {
+      return await db.Deck.findAll({
+        where: {
+          CategoryId: parseInt(category),
+        },
+        include: {
+          model: db.User,
+          where: {
+            id: {
+              [Op.col]: "Deck.CreatorId"
+            }
+          }
+        },
+      });
+    } else if (!category && !deck) {
+      return await db.Deck.findAll({
+        include: {
+          model: db.User,
+          where: {
+            id: {
+              [Op.col]: "Deck.CreatorId"
+            }
+          }
+        },
+      });
+    }
+  })();
+  console.log("RESULTS:  ", results)
   const filteredResults = results.filter(item => {
     if (item.private) {
-      if (item.CreatorId === parseInt(userId)) {
-        return item;
-      }
+      if (item.CreatorId === req.session.id) return true;
+      else return false;
     } else {
-      return item;
+      return true;
     }
-  })
+  }).map(item => {
+    return {
+      deck: {
+        name: item.dataValues.name,
+        createdAt: formatDate(item.dataValues.createdAt),
+      },
+      creator: item.Users[0].dataValues,
+    };
+  });
   res.render("search", sessionObject(req, filteredResults));
 });
 
 // Profile page
 router.get("/profile", function (req, res) {
-  if(req.session.user){
+  if(req.session.user.id){
     db.User.findOne({
       where: {
         id: req.session.user.id,
       }
     }).then(async function (user) {
       const rawDecks = await user.getDecks();
-      const decks = rawDecks.map(deck => deck.toJSON());
+      const decks = rawDecks.map(deck => {
+        return {
+          name: deck.name,
+          createdAt: formatDate(deck.createdAt),
+        }
+      });
       res.render("profile", sessionObject(req, decks));
     });
   } else {
@@ -138,7 +199,6 @@ router.get("/deck/:id", function (req, res) {
       }
     }
   }).then(function (deck) {
-    console.log("DECK>>>>>>>> ", deck)
     if (deck.private === true && req.session.id !== deck.CreatorId) {
       res.render("error", sessionObject(req, { message: "This deck is private", link: "home"}))
     } else {
@@ -152,7 +212,7 @@ router.get("/deck/:id", function (req, res) {
             name: deck.name,
             createdAt: formatDate(deck.createdAt),
           },
-          user: deck.Users[0].toJSON(),
+          creator: deck.Users[0].toJSON(),
           cards: deckCards.map(card => card.toJSON()),
         };
         console.log(deckData);

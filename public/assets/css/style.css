@@ -11,23 +11,23 @@ p {
 }
 
 .navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-image: url("/assets/images/flsh_strip.jpg");
-    
-      max-height: 120px;
-    
-      /* Center and scale the image nicely */
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-    
-      /* Needed to position the navbar */
-      position: relative;
-    }
-}
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-image: url("/assets/images/flsh_strip.jpg");
+  
+    max-height: 120px;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  
+    /* Needed to position the navbar */
+    position: relative;
+  }
+
 
 .navbar li {
     float: left;
