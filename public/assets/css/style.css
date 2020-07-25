@@ -27,7 +27,6 @@ p {
       /* Needed to position the navbar */
       position: relative;
     }
-}
 
 .navbar li {
     float: left;
