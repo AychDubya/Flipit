@@ -3,3 +3,7 @@
   <h2>Hello, {{ user.first_name }}</h2>
   <h2>Change number in URL and refresh page to change name displayed. Later do this dynamically.</h2>
   <h2>Our data is saved in users 1-4 (from seeds.js)</h2>
+
+  {{#each data}}
+    <h1>Deck: {{this.name}}</h1>
+  {{/each}}
