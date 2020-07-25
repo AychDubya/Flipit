@@ -1,2 +1,11 @@
   {{> navbar }}
   <h1>Search results page</h1>
+  {{#each data}}
+    <h2>{{this.deck.name}}</h2>
+    <h4>Created by: {{this.creator.username}}</h4>
+    <span>
+      <button class="button">Study</button>
+      <button class="button">View</button>
+      <button class="button">Delete</button>
+    </span>
+  {{/each}}
