@@ -138,6 +138,7 @@ router.get("/deck/:id", function (req, res) {
       }
     }
   }).then(function (deck) {
+    console.log("DECK>>>>>>>> ", deck)
     if (deck.private === true && req.session.id !== deck.CreatorId) {
       res.render("error", sessionObject(req, { message: "This deck is private", link: "home"}))
     } else {
