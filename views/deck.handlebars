@@ -1,2 +1,23 @@
   {{> navbar }}
   <h1>View Deck Page</h1>
+  <h3>Deck: {{ data.deck.name }}</h3>
+  <h3>Creator: {{ data.user.username }}</h3>
+  <h3>Created on: {{ data.deck.createdAt }}</h3>
+  {{#each data.cards}}
+  <div>
+    <div>
+      <h2>Card {{addOne @index}}</h2>  
+      <div>
+        <button>Save</button>
+        <button>Edit</button>
+        <button>Delete</button>
+      </div>
+    </div>
+    <div>
+      <h3>Question:</h3>
+      <p>{{question}}</p>
+      <h3>Answer:</h2>
+      <p>{{answer}}</p>
+    </div>
+  </div>
+  {{/each}}

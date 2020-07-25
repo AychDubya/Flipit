@@ -1,5 +1,5 @@
 const express = require("express");
-var exphbs = require("express-handlebars");
+const exphbs = require("express-handlebars");
 const session = require("express-session");
 
 const db = require("./models");
@@ -24,6 +24,10 @@ app.use(session({
 // Handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+var hbs = exphbs.create({});
+hbs.handlebars.registerHelper('addOne', function(value) {
+  return value + 1;
+});
 
 // * Routes
 const apiRoutes = require("./controllers/api-controller.js");
@@ -33,7 +37,7 @@ app.use(htmlRoutes);
 
 
 db.sequelize.sync({ force: true }).then(function () {
-  //seed();
+  seed();
   app.listen(PORT, function () {
     console.log("App listening on http://localhost:" + PORT);
   });
