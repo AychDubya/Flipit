@@ -1,8 +1,5 @@
-  {{> navbar }}
-  <div class="container-sm body-container">
+  <div class="card">
     <h1 class="header-font">Welcome to FlipIt</h1>
-<<<<<<< HEAD
-=======
     <form>
       <fieldset>
         <input type="hidden" id="userId" name="userId" value="{{user.id}}">
@@ -19,7 +16,8 @@
     </form>
     <h2>Explore</h2>
     {{#each data.explore}}
-      <button class="button" href="search/?category={{this.id}}&deck=&userId={{user.id}}">{{this.name}}</button>
+      <a href="search/?category={{this.id}}&deck=&userId={{user.id}}">
+        <button class="button">{{this.name}}</button>
+      </a>
     {{/each}}
->>>>>>> dev
   </div>
