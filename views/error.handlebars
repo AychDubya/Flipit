@@ -1,8 +1,6 @@
-  {{> navbar }}
-  <h2>{{data.message}}</h2>
-  <button><a href="{{data.link}}">{{data.link}}</a></button>
-  {{#if user}}
-  <h3>Logged in</h3>
-  {{else}}
-  <h3>Not logged in</h3>
-  {{/if}}
+  <div class="card">
+    <h2>{{data.message}}</h2>
+    <a href="{{data.link}}">
+      <button>{{data.link}}</button>
+    </a>
+  </div>

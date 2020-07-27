@@ -2,8 +2,7 @@
 
 // Access table
 const db = require("./models");
-
-module.exports = async function () {
+async function seed() {
   await db.User.create({
     username: "dwats",
     password: "password",
@@ -28,7 +27,7 @@ module.exports = async function () {
     first_name: "Mike",
     last_name: "Shenk",
   });
-
+  
   db.Category.bulkCreate([
     { name: "Art" }, 
     { name: "Business" }, 
@@ -43,7 +42,7 @@ module.exports = async function () {
     { name: "Sport" }, 
     { name: "Trivia" }, 
   ])
-
+  
   // Add decks
   db.Deck.bulkCreate([
     {
@@ -71,7 +70,7 @@ module.exports = async function () {
       CreatorId: 4,
     },
   ])
-
+  
   // Add decks to saved decks
   // * https://sequelizedocs.fullstackacademy.com/many-many-associations/
   const users = await db.User.findAll();
@@ -79,8 +78,8 @@ module.exports = async function () {
   users[1].addDeck(2);
   users[2].addDeck(3);
   users[3].addDeck(4);
-
-
+  
+  
   db.Card.bulkCreate([
     {
       question: "Glas",
@@ -108,6 +107,8 @@ module.exports = async function () {
       DeckId: 3
     },
   ])
-
+  
   users[0].addDeck(3);
 }
+
+seed();

@@ -112,6 +112,7 @@ router.get("/search", async function (req, res) {
     return {
       deck: {
         name: item.dataValues.name,
+        id: item.dataValues.id,
         createdAt: formatDate(item.dataValues.createdAt),
       },
       creator: item.Users[0].dataValues,
@@ -199,25 +200,29 @@ router.get("/deck/:id", function (req, res) {
       }
     }
   }).then(function (deck) {
-    if (deck.private === true && req.session.id !== deck.CreatorId) {
-      res.render("error", sessionObject(req, { message: "This deck is private", link: "home"}))
+    if (deck) {
+      if (deck.private === true && req.session.id !== deck.CreatorId) {
+        res.render("error", sessionObject(req, { message: "This deck is private", link: "home"}))
+      } else {
+        db.Card.findAll({
+          where: {
+            DeckId: deck.id,
+          }
+        }).then(function(deckCards) {
+          const deckData = {
+            deck: {
+              name: deck.name,
+              createdAt: formatDate(deck.createdAt),
+            },
+            creator: deck.Users[0].toJSON(),
+            cards: deckCards.map(card => card.toJSON()),
+          };
+          console.log(deckData);
+          res.render("deck", sessionObject(req, deckData));
+        })
+      }
     } else {
-      db.Card.findAll({
-        where: {
-          DeckId: deck.id,
-        }
-      }).then(function(deckCards) {
-        const deckData = {
-          deck: {
-            name: deck.name,
-            createdAt: formatDate(deck.createdAt),
-          },
-          creator: deck.Users[0].toJSON(),
-          cards: deckCards.map(card => card.toJSON()),
-        };
-        console.log(deckData);
-        res.render("deck", sessionObject(req, deckData));
-      })
+      res.render("error", sessionObject(req, {message: "No deck found", link: "home"}))
     }
   });
 });
