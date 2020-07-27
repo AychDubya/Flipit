@@ -6,7 +6,6 @@ const _ = require("lodash");
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 const Sequelize = require("sequelize");
-const session = require("express-session");
 const Op = Sequelize.Op;
 
 function sessionObject(req, data = {}) {
@@ -151,7 +150,7 @@ router.get("/login", function (req, res) {
   res.render("login", sessionObject(req));
 });
 
-router.post('/login',(req,res)=>{
+router.post('/login', function (req, res) {
   db.User.findOne({
     where: {
       username: req.body.username,
@@ -177,6 +176,10 @@ router.post('/login',(req,res)=>{
     console.log(err)
     return res.status(500).end();
   })
+})
+router.get('/logout', function (req, res) {
+  req.session.destroy();
+  res.redirect("/", sessionObject());
 })
 
 // Register Page

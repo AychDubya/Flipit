@@ -2,21 +2,16 @@
     <h1 class="header-font">Log In</h1>
     <form id="contact-info">
       <h3>Sign in to access your study stack!</h3>
-      <form>
-        <div class="form-text">
-          <br>
-          <label>Your Username:</label>
-          <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="username123">
-        </div>
-        <br>
-        <div class="form-text">
-          <label>Password:</label>
-          <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="P*******">
-        </div>
-        <br>
-        <button type="submit" class="btn btn-submit btn-sm float-center">Login</button>
-        <hr>
-        <h3>New to FlipIt? Click below to create your account.</h3>
-        <button type="submit" class="button" formaction="register">Create New Account</button>
+      <form id="loginForm">
+        <label for="loginUsername">Username</label>
+        <input type="text" class="form-control" id="loginUsername" placeholder="username123">
+
+        <label for="loginPassword">Password</label>
+        <input type="password" class="form-control" id="loginPassword" placeholder="P*******">
+
+        <button type="submit" id="loginSubmit">Login</button>
       </form>
+      <hr>
+      <h3>New to FlipIt? Click below to create your account.</h3>
+      <button type="submit" class="button" formaction="register">Create New Account</button>
   </div> 
