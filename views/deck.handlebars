@@ -1,24 +1,31 @@
-
-  {{> navbar }}
-  <h1>View Deck Page</h1>
-  <h3>Deck: {{ data.deck.name }}</h3>
-  <h3>Creator: {{ data.user.username }}</h3>
-  <h3>Created on: {{ data.deck.createdAt }}</h3>
-  {{#each data.cards}}
-  <div>
-    <div>
-      <h2>Card {{addOne @index}}</h2>  
-      <div>
-        <button>Save</button>
-        <button>Edit</button>
-        <button>Delete</button>
+  <div class="card">
+    <h1>{{ data.deck.name }}</h1>
+    <h3>Creator: {{ data.creator.username }}</h3>
+    <h3>Created on: {{ data.deck.createdAt }}</h3>
+    <div class="flashcards-container">
+      {{#each data.cards}}
+      <div class="flashcard">
+        <div class="flashcards-header">
+          <h3>Card {{addOne @index}}</h3>  
+          <div>
+            <button class="save-card" data-id="{{id}}">Save</button>
+            <button class="edit-card" data-id="{{id}}">Edit</button>
+            <button class="delete-card" data-id="{{id}}">Delete</button>
+          </div>
+        </div>
+        <div class="flashcards-body emulated-flex-gap">
+          <div>
+            <h4>Question:</h4>
+            <p>{{question}}</p>
+            <input type="text" value={{question}}>
+          </div>
+          <div>
+            <h4>Answer:</h4>
+            <p>{{answer}}</p>
+            <input type="text" value={{answer}}>
+          </div>
+        </div>
       </div>
-    </div>
-    <div>
-      <h3>Question:</h3>
-      <p>{{question}}</p>
-      <h3>Answer:</h2>
-      <p>{{answer}}</p>
+      {{/each}}
     </div>
   </div>
-  {{/each}}

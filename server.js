@@ -3,7 +3,6 @@ const exphbs = require("express-handlebars");
 const session = require("express-session");
 
 const db = require("./models");
-const seed = require("./seeds.js");
 
 const PORT = process.env.PORT || 8080;
 
@@ -36,8 +35,7 @@ const htmlRoutes = require("./controllers/html-controller.js");
 app.use(htmlRoutes);
 
 
-db.sequelize.sync({ force: true }).then(function () {
-  seed();
+db.sequelize.sync({ force: false }).then(function () {
   app.listen(PORT, function () {
     console.log("App listening on http://localhost:" + PORT);
   });
