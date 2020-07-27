@@ -9,16 +9,18 @@
     <div>
       <h2>Card {{addOne @index}}</h2>  
       <div>
-        <button>Save</button>
-        <button>Edit</button>
-        <button>Delete</button>
+        <button class="save-card" data-id="{{id}}">Save</button>
+        <button class="edit-card" data-id="{{id}}">Edit</button>
+        <button class="delete-card" data-id="{{id}}">Delete</button>
       </div>
     </div>
     <div>
       <h3>Question:</h3>
       <p>{{question}}</p>
+      <input type="text" value={{question}}>
       <h3>Answer:</h2>
       <p>{{answer}}</p>
+        <input type="text" value={{answer}}>
     </div>
   </div>
   {{/each}}
