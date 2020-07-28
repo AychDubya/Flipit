@@ -4,13 +4,18 @@
       <a href="/">FlipIt</a> 
     </li>
     <div class="nav-links">
+      <li class="nav-logo">
+        <a href="/">Search</a> 
+      </li>
       <li>
-        <a href="/team">Dev Team
-        </a>
+        <a href="/team">Dev Team</a>
       </li>
       {{#if user.id}}
       <li>
-        <a href="/user" tabindex="-1" aria-disabled="true">My Account</a>
+        <a href="/profile" tabindex="-1" aria-disabled="true">My Account</a>
+      </li>
+      <li id="logout">
+        <a href="/" tabindex="-1" aria-disabled="true">Log Out</a>
       </li>
       {{else}}
       <li>
