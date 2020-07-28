@@ -1,4 +1,26 @@
-  <div class="card">
+
+<div class="card"> 
+{{#each data}}
+  <div class="studycard">
+
+    <div class="front"> 
+      Front content
+      {{addOne @index}}
+        <h2>{{this.question}}</h2>
+    </div> 
+    <div class="back">
+      Back content
+      <h2>{{this.answer}}</h2>
+    </div> 
+
+  </div>
+{{/each}}
+</div>
+
+
+
+
+  {{!-- <div class="card">
     <h1>Study/game page</h1>
     {{#each data}}
       <h2>{{this.question}}</h2>
@@ -14,9 +36,25 @@
     <div class="back">
         <h3>Some Text in the Back!</h3>
     </div> 
-</div>
+</div> --}}
 
 
+
+{{!-- <div class="card">
+  <h1>Study/game page</h1>
+  {{#each data}}
+  <div class="front">
+    <h2>{{this.question}}</h2>
+  </div>
+  {{/each}}
+
+  <div class="back">
+    <h2>{{this.answer}}</h2>
+    <h3>Some Text in the Back!</h3>
+  </div>
+
+
+</div> --}}
 
 
 
