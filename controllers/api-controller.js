@@ -103,13 +103,21 @@ const nodemailer = require("nodemailer");
     });
 
     // Delete deck by id
-    router.delete("/api/delete_deck/:id", function (req, res) {
+    router.delete("/api/delete_deck", function (req, res) {
         db.Deck.destroy({
             where: {
-                id: req.params.id
+                id: req.body.id
             }
         }).then(function (dbDeck) {
-            res.json(dbDeck);
+            console.log("Deck deleted!");
+            db.Card.destroy({
+                where: {
+                    DeckId: req.body.id,
+                }
+            }).then(function(results) {
+                console.log("cards deleted");
+                res.redirect(`/profile`);
+            })
         });
     });
 

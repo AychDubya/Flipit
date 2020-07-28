@@ -21,6 +21,6 @@
     <p>Seach: {{data.search.deck}}</p>
     <p>Category: {{data.search.category}}</h4>
     {{#each data.results}}
-      {{>deckContainer name=this.deck.name creatorUn=this.creator.username creatorId=this.creator.id id=this.deck.id count=this.deck.cardCount date=this.deck.createdAt}}
+      {{>deckContainer name=this.deck.name creatorUn=this.creator.username creatorId=this.creator.id userId=this.userId deckId=this.deck.id count=this.deck.cardCount date=this.deck.createdAt}}
     {{/each}}
   </div>

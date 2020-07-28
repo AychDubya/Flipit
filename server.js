@@ -27,6 +27,9 @@ var hbs = exphbs.create({});
 hbs.handlebars.registerHelper('addOne', function(value) {
   return value + 1;
 });
+hbs.handlebars.registerHelper('equals', function(a, b) {
+  return a == b;
+})
 
 // * Routes
 const apiRoutes = require("./controllers/api-controller.js");

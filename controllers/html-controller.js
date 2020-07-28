@@ -19,6 +19,7 @@ function sessionObject(req, data = {}) {
       first_name: null,
       last_name: null,
       email: null,
+      createdAt: null,
     }
   }
   return { user, data };
@@ -148,6 +149,7 @@ router.get("/search", async function (req, res) {
           cardCount: item.dataValues.cardCount,
         },
         creator: item.Users[0].dataValues,
+        userId: req.session.user ? req.session.user.id : "",
       };
     });
     const pageData = {
@@ -205,6 +207,7 @@ router.get("/profile", function (req, res) {
               cardCount: cardCount,
             },
             creator: creator.dataValues,
+            userId: req.session.user.id,
           });
         }
         res.render("profile", sessionObject(req, decks));
@@ -238,7 +241,8 @@ router.post('/login', function (req, res) {
           username: user.username,
           first_name: user.first_name,
           last_name: user.last_name,
-          email: user.email
+          email: user.email,
+          createdAt: formatDate(user.createdAt),
         }
         res.redirect(`profile`);
       } else {
@@ -278,7 +282,8 @@ router.get("/deck/:id", function (req, res) {
     }
   }).then(function (deck) {
     if (deck) {
-      if (deck.private === true && req.session.id !== deck.CreatorId) {
+      console.log(req.session.user.id, deck.CreatorId)
+      if (deck.private === true && req.session.user.id !== deck.CreatorId) {
         res.render("error", sessionObject(req, { message: "This deck is private", link: "home"}))
       } else {
         db.Card.findAll({

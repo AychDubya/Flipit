@@ -15,7 +15,7 @@ $("#loginForm").submit(function(event){
   }).fail(function(err){
       console.log(err);
       location.reload();
-      alert("Something went wrong");
+      alert("Incorrect username or password");
   })
 })
 
