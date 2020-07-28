@@ -1,18 +1,26 @@
   <div class="card">
-    <h1>Search results page</h1>
-    {{#each data}}
-      <h2>{{this.deck.name}}</h2>
-      <h4>Created by: {{this.creator.username}}</h4>
-      <span>
-        <a href="/study">
-          <button class="button">Study</button>
-        </a>
-        <a href="/deck/{{this.deck.id}}">
-          <button class="button">View</button>
-        </a>
-        <a href="/">
-          <button class="button">Delete</button>
-        </a>
-      </span>
+    <h2>Search again</h2>
+    <form id="deckSearch">
+      <input type="hidden" id="userId" name="userId" value="{{user.id}}">
+      <label for="deckInput">Search deck name</label>
+
+      <input type="text" placeholder="ex. Ichthyology" id="deckInput">
+      <label for="categoryInput">Search by category</label>
+
+      <select id="categoryInput">
+        <option value="" default>Select a category</option>
+        {{#each data.categories}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+      
+      <input class="button-primary" type="submit" value="Search">
+    </form>
+    <hr>
+    <h2>Results</h2>
+    <p>Seach: {{data.search.deck}}</p>
+    <p>Category: {{data.search.category}}</h4>
+    {{#each data.results}}
+      {{>deckContainer name=this.deck.name creator=this.creator.username id=this.deck.id count=this.deck.cardCount date=this.deck.createdAt}}
     {{/each}}
   </div>

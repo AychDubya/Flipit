@@ -9,15 +9,18 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 function sessionObject(req, data = {}) {
-  const user = req.session.user 
-    ? req.session.user
-    : {
+  let user;
+  if (req.session && req.session.user) {
+    user = req.session.user;
+  } else {
+    user = {
       id: "",
       username: null,
       first_name: null,
       last_name: null,
-      email: null
-    };
+      email: null,
+    }
+  }
   return { user, data };
 }
 
@@ -42,6 +45,10 @@ router.get(["/", "/index", "/home"], function (req, res) {
 // Search Results page
 router.get("/search", async function (req, res) {
   const { deck, category } = req.query;
+  const allCats = await db.Category.findAll();
+  const allCatsParsed = allCats.map(cat => {
+    return { id: cat.id, name: cat.name };
+  });
   const results = await (async function() {
     if (deck && category) {
       return await db.Deck.findAll({
@@ -49,97 +56,163 @@ router.get("/search", async function (req, res) {
           name: deck,
           CategoryId: parseInt(category),
         },
-        include: {
-          model: db.User,
-          where: {
-            id: {
-              [Op.col]: "Deck.CreatorId"
-            }
-          }
+        attributes: { 
+          include: [[Sequelize.fn("COUNT", Sequelize.col("cards.id")), "cardCount"]] 
         },
+        include: [
+          {
+            model: db.User,
+            where: {
+              id: {
+                [Op.col]: "Deck.CreatorId"
+              }
+            }
+          },
+          { model: db.Card, },
+        ],
       });
     } else if (deck && !category) {
       return await db.Deck.findAll({
         where: {
           name: deck,
         },
-        include: {
-          model: db.User,
-          where: {
-            id: {
-              [Op.col]: "Deck.CreatorId"
-            }
-          }
+        attributes: { 
+          include: [[Sequelize.fn("COUNT", Sequelize.col("cards.id")), "cardCount"]] 
         },
+        include: [
+          {
+            model: db.User,
+            where: {
+              id: {
+                [Op.col]: "Deck.CreatorId"
+              }
+            }
+          },
+          { model: db.Card, },
+        ],
       });
     } else if (category && !deck) {
       return await db.Deck.findAll({
         where: {
           CategoryId: parseInt(category),
         },
-        include: {
-          model: db.User,
-          where: {
-            id: {
-              [Op.col]: "Deck.CreatorId"
-            }
-          }
+        attributes: { 
+          include: [[Sequelize.fn("COUNT", Sequelize.col("cards.id")), "cardCount"]] 
         },
+        include: [
+          {
+            model: db.User,
+            where: {
+              id: {
+                [Op.col]: "Deck.CreatorId"
+              }
+            }
+          },
+          { model: db.Card, },
+        ],
       });
     } else if (!category && !deck) {
       return await db.Deck.findAll({
-        include: {
-          model: db.User,
-          where: {
-            id: {
-              [Op.col]: "Deck.CreatorId"
-            }
-          }
+        attributes: { 
+          include: [[Sequelize.fn("COUNT", Sequelize.col("cards.id")), "cardCount"]] 
         },
+        include: [
+          {
+            model: db.User,
+            where: {
+              id: {
+                [Op.col]: "Deck.CreatorId"
+              }
+            }
+          },
+          { model: db.Card, },
+        ],
       });
     }
   })();
-  console.log("RESULTS:  ", results)
-  const filteredResults = results.filter(item => {
-    if (item.private) {
-      if (item.CreatorId === req.session.id) return true;
-      else return false;
-    } else {
-      return true;
-    }
-  }).map(item => {
-    return {
-      deck: {
-        name: item.dataValues.name,
-        id: item.dataValues.id,
-        createdAt: formatDate(item.dataValues.createdAt),
+  if (results[0].id) {
+    console.log("results exsist")
+    const parsedResults = results.filter(item => {
+      if (item.private) {
+        if (item.CreatorId === req.session.id) return true;
+        else return false;
+      } else {
+        return true;
+      }
+    }).map(item => {
+      return {
+        deck: {
+          name: item.dataValues.name,
+          id: item.dataValues.id,
+          createdAt: formatDate(item.dataValues.createdAt),
+          cardCount: item.dataValues.cardCount,
+        },
+        creator: item.Users[0].dataValues,
+      };
+    });
+    const pageData = {
+      results: parsedResults,
+      search: {
+        deck: deck ? deck : "None",
+        category: category ? allCatsParsed[category - 1].name : "None",
       },
-      creator: item.Users[0].dataValues,
-    };
-  });
-  res.render("search", sessionObject(req, filteredResults));
+      categories: allCatsParsed
+    }
+    console.log(pageData);
+    res.render("search", sessionObject(req, pageData));
+  } else {
+    console.log("none exsist")
+    const pageData = {
+      results: [],
+      search: {
+        deck: deck ? deck : "None",
+        category: category ? allCatsParsed[category - 1].name : "None",
+      },
+      categories: allCatsParsed
+    }
+    res.render("search", sessionObject(req, pageData))
+  }
 });
 
 // Profile page
 router.get("/profile", function (req, res) {
-  if(req.session.user.id){
+  console.log("run profile route");
+
+  if(req.session.user){
     db.User.findOne({
       where: {
         id: req.session.user.id,
-      }
-    }).then(async function (user) {
-      const rawDecks = await user.getDecks();
-      const decks = rawDecks.map(deck => {
-        return {
-          name: deck.name,
-          createdAt: formatDate(deck.createdAt),
+      },
+    }).then(function (user) {
+      user.getDecks().then(async function (rawDecks) {
+        const decks = [];
+        for (const deck of rawDecks) {
+          const cardCount = await db.Card.count({
+            where: {
+              DeckId: deck.id,
+            }
+          });
+          const creator = await db.User.findOne({
+            where: {
+              id: deck.CreatorId,
+            }
+          })
+          decks.push({
+            deck: {
+              name: deck.name,
+              id: deck.id,
+              createdAt: formatDate(deck.createdAt),
+              cardCount: cardCount,
+            },
+            creator: creator.dataValues,
+          });
         }
+        res.render("profile", sessionObject(req, decks));
       });
-      res.render("profile", sessionObject(req, decks));
     });
   } else {
     res.status(401).render("error", sessionObject(
-      req.session.user,
+      req,
       {message: "Please login to view profile.", link: "login"}
     ));
   }
@@ -177,9 +250,10 @@ router.post('/login', function (req, res) {
     return res.status(500).end();
   })
 })
+
 router.get('/logout', function (req, res) {
   req.session.destroy();
-  res.redirect("/", sessionObject());
+  res.redirect("/");
 })
 
 // Register Page
@@ -241,7 +315,7 @@ router.get("/study/:deckId", function (req, res) {
   });
 });
 
-// Error pageb
+// Error page
 router.get("/error", function (req, res) {
   res.render("error", sessionObject(req, {message: "An error has occured", link: "home"}));
 });

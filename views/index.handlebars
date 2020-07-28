@@ -1,18 +1,20 @@
   <div class="card">
     <h1 class="header-font">Welcome to FlipIt</h1>
-    <form>
-      <fieldset>
-        <input type="hidden" id="userId" name="userId" value="{{user.id}}">
-        <label for="deckSearch">Search deck name</label>
-        <input type="text" placeholder="ex. Ichthyology" id="deckSearch">
-        <label for="categorySearch">Search by category</label>
-        <select id="categorySearch">
-          {{#each data.categories}}
-          <option value="{{this.id}}">{{this.name}}</option>
-          {{/each}}
-        </select>
-        <input class="button-primary" type="submit" value="Search">
-      </fieldset>
+    <form id="deckSearch">
+      <input type="hidden" id="userId" name="userId" value="{{user.id}}">
+      <label for="deckInput">Search deck name</label>
+
+      <input type="text" placeholder="ex. Ichthyology" id="deckInput">
+      <label for="categoryInput">Search by category</label>
+
+      <select id="categoryInput">
+        <option value="" default>Select a category</option>
+        {{#each data.categories}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+      
+      <input class="button-primary" type="submit" value="Search">
     </form>
     <h2>Explore</h2>
     {{#each data.explore}}
