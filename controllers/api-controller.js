@@ -96,7 +96,8 @@ const nodemailer = require("nodemailer");
         }).then(function (cards) {
           res.json(cards)
         });
-      })
+    })
+
     router.post("/api/new_deck", function (req, res) {
         db.Deck.create({
             name: req.body.name,

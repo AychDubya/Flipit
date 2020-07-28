@@ -117,5 +117,5 @@ $("#createDeck").submit(function(event) {
     CategoryId: $("#deckCategory").val(),
     private: $("#private").is(":checked"),
   }
-  console.log(deck);
+  console.log(deck)
 })

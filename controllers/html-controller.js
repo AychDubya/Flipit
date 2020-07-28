@@ -155,6 +155,7 @@ router.get("/search", async function (req, res) {
     const pageData = {
       results: parsedResults,
       search: {
+        resultCount: parsedResults.length,
         deck: deck ? deck : "None",
         category: category ? allCatsParsed[category - 1].name : "None",
       },
@@ -328,7 +329,7 @@ router.get("/error", function (req, res) {
 
 // Team page
 router.get("/team", function(req, res) {
-  res.render("Team", sessionObject(req));
+  res.render("team", sessionObject(req));
 })
 
 module.exports = router;
