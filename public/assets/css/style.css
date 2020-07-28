@@ -60,10 +60,11 @@ p {
 
 .card {
   background-color: white;
-  padding: 100px;
+  padding: 50px;
   border-radius: 8px;
   box-shadow: 0 0 30px -5px hsla(0,0%,60.8%,.45);
-  margin-bottom: 10px;
+  margin-bottom: 25px;
+  margin-top: 25px;
 }
 
 .form-section {
@@ -137,12 +138,26 @@ footer p {
   max-width: 25%;
 }
 
+.deck-container {
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 30px -5px hsla(0,0%,60.8%,.45);
+}
+.deck-container h2 {
+  margin-bottom: 5px;
+}
+
 @media screen and (max-width: 480px) {
+  .card {
+    padding: 15px;
+  }
   .editFlashcards-header {
     flex-direction: column;
   }
-  .editFlashcards-header button {
+  .editFlashcards-header button,
+  .deck-container button {
     padding-left: 15px;
     padding-right: 15px;
   }
+
 }
