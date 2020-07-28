@@ -92,3 +92,31 @@ $("#deckSearch").submit(function(event) {
 
   location.href = `/search?deck=${deck}&category=${category}&user=${user}`;
 })
+
+
+// ! Modal JS
+if (location.href.split("/")[3] === "profile") {
+  $("#create-deck").click(function(event) {
+    $("#newDeck-modal").toggle();
+  });
+  $(".close").first().click(function(event) {
+    $("#newDeck-modal").toggle();
+  });
+  $(window).click(function(event) {
+    if ($(event.target)[0] == $("#newDeck-modal")[0]) {
+      $("#newDeck-modal").hide();
+    }
+  });
+}
+
+// ! Create deck
+$("#createDeck").submit(function(event) {
+  event.preventDefault(event);
+  const deck = {
+    CreatorId: $("#userId").val(),
+    name: $("#deckName").val(),
+    CategoryId: $("#deckCategory").val(),
+    private: $("#private").is(":checked"),
+  }
+  console.log(deck);
+})
