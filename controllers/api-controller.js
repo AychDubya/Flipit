@@ -77,6 +77,16 @@ const nodemailer = require("nodemailer");
 
     // * DECK API ROUTES
     // Create new deck
+
+    router.get("/api/deck/:id", function (req, res) {
+        db.Card.findAll({
+          where: {
+            DeckId: req.params.id,
+          }
+        }).then(function (cards) {
+          res.json(cards)
+        });
+      })
     router.post("/api/new_deck", function (req, res) {
         db.Deck.create({
             name: req.body.name,

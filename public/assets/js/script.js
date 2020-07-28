@@ -39,5 +39,3 @@ $("#deckSearch").submit(function(event) {
 
   location.href = `/search?deck=${deck}&category=${category}&user=${user}`;
 })
-
-$(".studycard").flip();

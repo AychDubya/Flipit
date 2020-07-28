@@ -1,131 +1,18 @@
+<div class="card">
 
-<div class="card"> 
-{{#each data}}
   <div class="studycard">
-
-    <div class="front"> 
+    <div class="front">
       Front content
-      {{addOne @index}}
-        <h2>{{this.question}}</h2>
-    </div> 
+
+      <h2 id="question"></h2>
+    </div>
     <div class="back">
       Back content
-      <h2>{{this.answer}}</h2>
-    </div> 
-
+      <h2 id="answer"></h2>
+    </div>
   </div>
-{{/each}}
+  <button id="previous">Previous Card</button>
+  <button id="next">Next Card</button>
+
+
 </div>
-
-
-
-
-  {{!-- <div class="card">
-    <h1>Study/game page</h1>
-    {{#each data}}
-      <h2>{{this.question}}</h2>
-      <h2>{{this.answer}}</h2>
-    {{/each}}
-  </div>
-
-
-<div class="flip"> 
-    <div class="front"> 
-        <img src="/path/to/image.jpg" alt="" />
-    </div> 
-    <div class="back">
-        <h3>Some Text in the Back!</h3>
-    </div> 
-</div> --}}
-
-
-
-{{!-- <div class="card">
-  <h1>Study/game page</h1>
-  {{#each data}}
-  <div class="front">
-    <h2>{{this.question}}</h2>
-  </div>
-  {{/each}}
-
-  <div class="back">
-    <h2>{{this.answer}}</h2>
-    <h3>Some Text in the Back!</h3>
-  </div>
-
-
-</div> --}}
-
-
-
-
-  
-
-  {{!-- <style>
-    
-.maincontainer{
-  position: <center></center>;
-  width: 250px;
-  height: 320px;
- }
-
-.thecard{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: all 0.5s ease;
-}
-
-
-.thecard:hover{
-  transform: rotateY(180deg);
-}
-
-.thefront{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  background: #ffc728;
-  color: #333;
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
-  border-radius: 20px;
-  font-size: 26px;
-  font-weight: bold;
-}
-
-.theback{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  background: #5fcf80;
-  color: #fff;
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
-  border-radius: 20px;
-  font-size: 26px;
-  font-weight: bold;
-  transform: rotateY(180deg);
-  
-}
-
-</style>
-
-<body>
-
-  <div class="maincontainer">
-  
-  <div class="thecard">
-
-  <div class="thefront">Front of Card {{}}</div>
-
-  <div class="theback">Back of Card</div>
-
-  </div>
-
-  </div>
-
-  </body> --}}
