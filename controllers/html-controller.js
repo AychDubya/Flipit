@@ -289,6 +289,7 @@ router.get("/deck/:id", function (req, res) {
           const deckData = {
             deck: {
               name: deck.name,
+              id: deck.id,
               createdAt: formatDate(deck.createdAt),
             },
             creator: deck.Users[0].toJSON(),

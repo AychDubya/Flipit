@@ -127,7 +127,22 @@ footer p {
   flex: 1;
 }
 
+.question-edit,
+.answer-edit {
+  display: none;
+}
+
 .headshot {
   max-height: auto;
   max-width: 25%;
+}
+
+@media screen and (max-width: 480px) {
+  .editFlashcards-header {
+    flex-direction: column;
+  }
+  .editFlashcards-header button {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }
