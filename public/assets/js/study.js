@@ -9,7 +9,7 @@ $.get("/api/deck/" + deckIndx).then(function (data){
     console.log(data)
     $("#question").text(data[0].question)
     $("#answer").text(data[0].answer)
-    
+
 $("#next").click(function(event){
     counter++
     $("#question").text(data[counter].question)
@@ -23,9 +23,3 @@ $("#previous").click(function(event){
 
 })
 })
-// $(".studycard").click(function(event){
-//     let $studyCard = $('.studycard');
-//     $studyCard.css("display", $studyCard.css("display")==='none' ? '': 'none');
-
-//     $(`.studycard`).toggle();
-// })
