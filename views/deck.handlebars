@@ -1,9 +1,33 @@
   <div class="card">
     <h1>{{ data.deck.name }}</h1>
-    {{!-- accesss deckId{{ data.deck.id }} --}}
+    {{!--accesss deckId{{ data.deck.id }} --}}
     <h3>Creator: {{ data.creator.username }}</h3>
     <h3>Created on: {{ data.deck.createdAt }}</h3>
     <div class="editFlashcards-container">
+        <div class="editFlashcard" id="card-{{data.deck.id}}">
+        <div class="editFlashcards-header">
+
+          {{!-- new card --}}
+          <h3>New Card</h3>  
+          <div>
+            <button class="save-newcard" disabled data-id="{{data.deck.id}}">Save</button>
+            <button class="edit-newcard" data-id="{{data.deck.id}}">Add Card</button>
+          </div>
+        </div>
+        <div class="editFlashcards-body emulated-flex-gap">
+          <div>
+            <h4>Question:</h4>
+            <p class="question-display">{{question}}</p>
+            <input class="question-edit" id="newquestion" type="text" value={{question}}>
+          </div>
+          <div>
+            <h4>Answer:</h4>
+            <p class="answer-display">{{answer}}</p>
+            <input class="answer-edit" id="newanswer" type="text" value={{answer}}>
+          </div>
+        </div>
+      </div>
+
       {{#each data.cards}}
       <div class="editFlashcard" id="card-{{id}}">
         <div class="editFlashcards-header">
