@@ -19,25 +19,20 @@ $(function(){
         );
     });
 
-    // $(".save-card").on("submit", function(event) {
-    //     // Make sure to preventDefault on a submit event.
-    //     event.preventDefault();
-    
-    //     var newCard = {
-    //       name: $("").val().trim(),
-    //       addCard: $("").val().trim()
-    //     };
-    //     // Send the POST request.
-    //     $.ajax("/api/new_card", {
-    //         type: "POST",
-    //         data: newCard
-    //       }).then(
-    //         function() {
-    //           console.log("created new card");
-    //           // Reload the page to get the updated list
-    //           location.reload();
-    //         }
-    //       );
-    //     });
+   
 
+   $(".delete-card").click(function(event) {
+       let id =$(this).data("id");
+        console.log(id)
+
+    //SEND DELETE REQUEST
+    $.ajax("api/new_card" + id, { 
+        type:"DELETE"
+    }).then(
+        function() {
+            console.log("deleted card", id);
+            location.reload()
+        }
+     );
+   });
 });
