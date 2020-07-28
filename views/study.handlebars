@@ -5,3 +5,72 @@
       <h2>{{this.answer}}</h2>
     {{/each}}
   </div>
+
+  <style>
+    
+.maincontainer{
+  position: <center></center>;
+  width: 250px;
+  height: 320px;
+ }
+
+.thecard{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
+}
+
+
+.thecard:hover{
+  transform: rotateY(180deg);
+}
+
+.thefront{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: #ffc728;
+  color: #333;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 20px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.theback{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: #5fcf80;
+  color: #fff;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  transform: rotateY(180deg);
+  
+}
+
+</style>
+
+<body>
+
+  <div class="maincontainer">
+  
+  <div class="thecard">
+
+  <div class="thefront">Front of Card</div>
+
+  <div class="theback">Back of Card</div>
+
+  </div>
+
+  </div>
+
+    </body>
