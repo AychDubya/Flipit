@@ -80,7 +80,7 @@ $(function () {
         });
     });
 
-    $("#delete-deckPg-btn").click(function(event) {
+    $(".delete-deckPg-btn").click(function(event) {
         event.preventDefault();
         const confirmed = confirm("Delete this deck and all its cards?");
         if (confirmed) {

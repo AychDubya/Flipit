@@ -12,8 +12,6 @@
       <button class="button">View</button>
     </a>
     {{#if (equals creatorId userId)}}
-    <a href="/">
-      <button class="button">Delete</button>
-    </a>
+    <button class="button delete-deckPg-btn" data-id="{{deck.id}}">Delete deck</button>
     {{/if}}
   </div>

@@ -10,7 +10,7 @@
           <button class="button">Study</button>
         </a>
         {{#if (equals data.creator.id user.id)}}
-        <button class="button" id="delete-deckPg-btn" data-id="{{data.deck.id}}">Delete deck</button>
+        <button class="button" class="delete-deckPg-btn" data-id="{{data.deck.id}}">Delete deck</button>
         {{/if}}
       </div>
     </div>
