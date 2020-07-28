@@ -1,13 +1,17 @@
-  <h2>{{name}}</h2>
-  <h5>{{count}} cards</h5>
-  <h4>Created on: {{date}}</h4>
-  <h4>Created by: {{creator}}</h4>
-  <a href="/study/{{id}}">
-    <button class="button">Study</button>
-  </a>
-  <a href="/deck/{{id}}">
-    <button class="button">View</button>
-  </a>
-  <a href="/">
-    <button class="button">Delete</button>
-  </a>
+  <div class="deck-container">
+    <h2>{{name}}</h2>
+    <p>{{count}} cards</p>
+    <div class="creation-info">
+      <h5>Created on: {{date}}</h5>
+      <h5>Created by: {{creatorUn}}</h5>
+    </div>
+    <a href="/study/{{deckId}}">
+      <button class="button">Study</button>
+    </a>
+    <a href="/deck/{{deckId}}">
+      <button class="button">View</button>
+    </a>
+    {{#if (equals creatorId userId)}}
+    <button class="button delete-deckPg-btn" data-id="{{deck.id}}">Delete deck</button>
+    {{/if}}
+  </div>

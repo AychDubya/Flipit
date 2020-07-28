@@ -13,6 +13,16 @@ const nodemailer = require("nodemailer");
         });
     });
 
+    router.get("/api/exists/username/:username", function (req, res) {
+        db.User.count({
+            where: {
+                username: req.params.username,
+            }
+        }).then(function (dbUser) {
+            res.json(dbUser > 0);
+        });
+    });
+
     // Create new user
     router.post("/api/users", function (req, res) {
         console.log("testing")
@@ -23,31 +33,31 @@ const nodemailer = require("nodemailer");
             last_name: req.body.last_name,
             email: req.body.email
         }).then(function (dbUser) {
-
             res.json(dbUser)
-            var transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                  user: 'FlipItStudy@gmail.com',
-                  pass: 'FlippedOut2020'
-                }
-              });
-              
-              var mailOptions = {
-                from: 'FlipItStudy@gmail.com',
-                to: `${req.body.email}`,
-                subject: 'Sending Email using Node.js',
-                text: 'Thank you for using FlipIt to study! Get started learning'
-              };
-              
-              transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                  console.log(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                }
-              });
-
+            if (req.body.email) {
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                      user: 'FlipItStudy@gmail.com',
+                      pass: 'FlippedOut2020'
+                    }
+                  });
+                  
+                  var mailOptions = {
+                    from: 'FlipItStudy@gmail.com',
+                    to: `${req.body.email}`,
+                    subject: 'Sending Email using Node.js',
+                    text: 'Thank you for using FlipIt to study! Get started learning'
+                  };
+                  
+                  transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                    }
+                  });
+            }
         });
     });
 
@@ -103,13 +113,21 @@ const nodemailer = require("nodemailer");
     });
 
     // Delete deck by id
-    router.delete("/api/delete_deck/:id", function (req, res) {
+    router.delete("/api/delete_deck", function (req, res) {
         db.Deck.destroy({
             where: {
-                id: req.params.id
+                id: req.body.id
             }
         }).then(function (dbDeck) {
-            res.json(dbDeck);
+            console.log("Deck deleted!");
+            db.Card.destroy({
+                where: {
+                    DeckId: req.body.id,
+                }
+            }).then(function(results) {
+                console.log("cards deleted");
+                res.redirect(`/profile`);
+            })
         });
     });
 
