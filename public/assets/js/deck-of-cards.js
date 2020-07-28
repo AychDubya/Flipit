@@ -24,7 +24,6 @@ $(function(){
     });
 
     $(".edit-card").click(function(event) {
-        console.log("working")
         let id = $(this).data("id");
 
         $(`#card-${id} .save-card`).prop('disabled', function(index, value) { 
