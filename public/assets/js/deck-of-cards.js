@@ -8,12 +8,14 @@ $(function(){
         };
         
         // Send the PUT request.
-        $.ajax("/api/new_card" + id, {
+        $.ajax("/api/new_card/" + id, {
             type: "PUT",
             data: newCardAdd
         }).then(
-            function() {
-                // / Reload the page to get the updated list
+            function(res) {
+                // Find card data from response
+                // pass into view
+                // Reload the page to get the updated list
                 location.reload();
             }
         );
