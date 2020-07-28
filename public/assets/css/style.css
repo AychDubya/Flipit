@@ -66,6 +66,14 @@ p {
   margin-bottom: 10px;
 }
 
+.front, .back {
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 30px -5px hsla(0,0%,60.8%,.45);
+  margin-bottom: 10px;
+}
+
 .form-section {
   display: flex;
   width: 100%;
