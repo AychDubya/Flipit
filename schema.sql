@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS flipit;
+
+CREATE DATABASE flipit;

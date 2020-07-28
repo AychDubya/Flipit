@@ -1,0 +1,47 @@
+  <div class="card">
+    <div class="profile-header">
+      <div class="profile-info">
+        <h2>Hello, {{ user.username }}</h2>
+        <p>Joined: {{ user.createdAt }}</p>
+      </div>
+      <div class="profile-buttons">
+        <button class="button" id="create-deck">New Deck</button>
+        <button class="button" data-id="{{user.id}}">Delete account</button>
+      </div>
+    </div>
+    <hr>
+    <h3>Saved Decks:</h3>
+    {{#each data}}
+      {{>deckContainer name=this.deck.name creatorUn=this.creator.username creatorId=this.creator.id userId=this.userId deckId=this.deck.id count=this.deck.cardCount date=this.deck.createdAt}}
+    {{/each}}
+  </div>
+  <!-- The Modal -->
+  <div id="newDeck-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>New Deck</h2>
+        <p class="close">&times;</p>
+      </div>
+      <form id="createDeck">
+        <input type="hidden" id="userId" name="userId" value="{{user.id}}">
+    
+        <label for="deckName">Deck name:</label>
+        <input type="text" placeholder="ex. Ichthyology" id="deckName">
+
+        <label for="deckCategory">Deck category:</label>
+        <select id="deckCategory">
+          <option value="" default>Select a category:</option>
+          {{#each data.categories}}
+          <option value="{{this.id}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+
+        <div class="float-right">
+          <input type="checkbox" checked id="private">
+          <label class="label-inline" for="private">Make public</label>
+        </div>
+        
+        <input class="button-primary" type="submit" value="Create">
+      </form>
+    </div>
+  </div>
