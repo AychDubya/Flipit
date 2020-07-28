@@ -25,11 +25,11 @@
       <form id="createDeck">
         <input type="hidden" id="userId" name="userId" value="{{user.id}}">
     
-        <label for="deckName-input">Deck name:</label>
-        <input type="text" placeholder="ex. Ichthyology" id="deckName-input">
+        <label for="deckName">Deck name:</label>
+        <input type="text" placeholder="ex. Ichthyology" id="deckName">
 
-        <label for="deckCategory-input">Deck category:</label>
-        <select id="deckCategory-input">
+        <label for="deckCategory">Deck category:</label>
+        <select id="deckCategory">
           <option value="" default>Select a category:</option>
           {{#each data.categories}}
           <option value="{{this.id}}">{{this.name}}</option>
@@ -37,8 +37,8 @@
         </select>
 
         <div class="float-right">
-          <input type="checkbox" checked id="confirmField">
-          <label class="label-inline" for="confirmField">Make public</label>
+          <input type="checkbox" checked id="private">
+          <label class="label-inline" for="private">Make public</label>
         </div>
         
         <input class="button-primary" type="submit" value="Create">

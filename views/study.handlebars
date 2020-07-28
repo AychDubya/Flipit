@@ -1,8 +1,16 @@
-  <div class="card">
-    <h1>Study/game page</h1>
-    {{#each data}}
-      <h2>{{this.question}}</h2>
-      <h2>{{this.answer}}</h2>
-      <hr>
-    {{/each}}
+<div class="card">
+  <div class="studycard">
+    <div class="front">
+      Front content
+      <h2 id="question"></h2>
+    </div>
+    <div class="back">
+      Back content
+      <h2 id="answer"></h2>
+    </div>
   </div>
+  <button id="previous">Previous Card</button>
+  <button id="next">Next Card</button>
+
+
+</div>

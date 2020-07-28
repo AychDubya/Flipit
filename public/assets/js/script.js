@@ -93,7 +93,6 @@ $("#deckSearch").submit(function(event) {
   location.href = `/search?deck=${deck}&category=${category}&user=${user}`;
 })
 
-
 // ! Modal JS
 if (location.href.split("/")[3] === "profile") {
   $("#create-deck").click(function(event) {
