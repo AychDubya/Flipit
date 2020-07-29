@@ -290,7 +290,6 @@ router.get("/deck/:id", function (req, res) {
     }
   }).then(function (deck) {
     if (deck) {
-      console.log(req.session.user.id, deck.CreatorId)
       if (deck.private === true && req.session.user.id !== deck.CreatorId) {
         res.render("error", sessionObject(req, { message: "This deck is private", link: "home"}))
       } else {
@@ -320,12 +319,12 @@ router.get("/deck/:id", function (req, res) {
 
 // Study page
 router.get("/study/:deckId", function (req, res) {
-  db.Card.findAll({
+  db.Deck.findOne({
     where: {
-      DeckId: req.params.deckId,
+      id: req.params.deckId,
     }
-  }).then(function (cards) {
-    res.render("study", sessionObject(req, cards.map(card => card.toJSON())));
+  }).then(function (deck) {
+    res.render("study", sessionObject(req, deck.name));
   });
 });
 
