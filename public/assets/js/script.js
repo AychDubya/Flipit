@@ -75,7 +75,7 @@ $("#registerForm").submit(async function(event) {
       data: user,
     }).done(function(data) {
       console.log(data);
-      location.reload();
+      location.href = "/login";
     }).fail(function(err) {
       console.log(err);
       location.reload();
@@ -109,13 +109,52 @@ if (location.href.split("/")[3] === "profile") {
 }
 
 // ! Create deck
-$("#createDeck").submit(function(event) {
+$("#createDeck-form").submit(function(event) {
   event.preventDefault(event);
   const deck = {
     CreatorId: $("#userId").val(),
     name: $("#deckName").val(),
     CategoryId: $("#deckCategory").val(),
-    private: $("#private").is(":checked"),
+    private: !$("#private").is(":checked"),
   }
-  console.log(deck);
+  if (!deck.name) {
+    alert("Please name your deck");
+  } else if (!deck.CategoryId) {
+    alert("Please select a category");
+  } else {
+    $.ajax({
+      url: "/api/new_deck",
+      method: "POST",
+      data: deck,
+    }).done(function(data) {
+      console.log(data);
+      location.reload();
+    }).fail(function(err) {
+      console.log(err);
+      location.reload();
+    })
+  }
 })
+
+// ! Delete user
+$("#delete-user").click(function(event) {
+  event.preventDefault();
+  const userId = $(this).data("id");
+  const confirmed = confirm("Delete your account, decks and cards?");
+  if (confirmed) {
+    $.ajax({
+      url: "/api/users/" + userId,
+      method: "DELETE",
+    }).done(function(data) {
+      console.log(data);
+      location.href = "/register";
+    }).fail(function(err) {
+      console.log(err);
+      location.reload();
+    })
+  } else {
+    console.log("Cancelled");
+  }
+})
+
+
