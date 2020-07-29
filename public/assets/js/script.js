@@ -75,7 +75,7 @@ $("#registerForm").submit(async function(event) {
       data: user,
     }).done(function(data) {
       console.log(data);
-      location.reload();
+      location.href = "/login";
     }).fail(function(err) {
       console.log(err);
       location.reload();
@@ -155,8 +155,6 @@ $("#delete-user").click(function(event) {
   } else {
     console.log("Cancelled");
   }
-
-
 })
 
 

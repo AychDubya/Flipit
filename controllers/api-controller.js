@@ -43,20 +43,20 @@ const nodemailer = require("nodemailer");
                     }
                   });
                   
-                  var mailOptions = {
+                var mailOptions = {
                     from: 'FlipItStudy@gmail.com',
                     to: `${req.body.email}`,
                     subject: `Welcome to FlipIt, ${dbUser.username}`,
                     text: `Thank you for signing up to use FlipIt to study! Get started learning now at https://flipitstudy.herokuapp.com/.`,
-                  };
+                };
                   
-                  transporter.sendMail(mailOptions, function(error, info){
+                transporter.sendMail(mailOptions, function(error, info){
                     if (error) {
                       console.log(error);
                     } else {
                       console.log('Email sent: ' + info.response);
                     }
-                  });
+                });
             }
         });
     });
