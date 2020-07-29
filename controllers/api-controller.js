@@ -43,20 +43,20 @@ const nodemailer = require("nodemailer");
                     }
                   });
                   
-                  var mailOptions = {
+                var mailOptions = {
                     from: 'FlipItStudy@gmail.com',
                     to: `${req.body.email}`,
-                    subject: 'Sending Email using Node.js',
-                    text: 'Thank you for using FlipIt to study! Get started learning'
-                  };
+                    subject: `Welcome to FlipIt, ${dbUser.username}`,
+                    text: `Thank you for signing up to use FlipIt to study! Get started learning now at https://flipitstudy.herokuapp.com/.`,
+                };
                   
-                  transporter.sendMail(mailOptions, function(error, info){
+                transporter.sendMail(mailOptions, function(error, info){
                     if (error) {
                       console.log(error);
                     } else {
                       console.log('Email sent: ' + info.response);
                     }
-                  });
+                });
             }
         });
     });
@@ -96,7 +96,8 @@ const nodemailer = require("nodemailer");
         }).then(function (cards) {
           res.json(cards)
         });
-      })
+    })
+
     router.post("/api/new_deck", function (req, res) {
         db.Deck.create({
             name: req.body.name,

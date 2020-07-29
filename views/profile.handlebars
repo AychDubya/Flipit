@@ -6,12 +6,12 @@
       </div>
       <div class="profile-buttons">
         <button class="button" id="create-deck">New Deck</button>
-        <button class="button" data-id="{{user.id}}">Delete account</button>
+        <button class="button" id="delete-user" data-id="{{user.id}}">Delete account</button>
       </div>
     </div>
     <hr>
     <h3>Saved Decks:</h3>
-    {{#each data}}
+    {{#each data.decks}}
       {{>deckContainer name=this.deck.name creatorUn=this.creator.username creatorId=this.creator.id userId=this.userId deckId=this.deck.id count=this.deck.cardCount date=this.deck.createdAt}}
     {{/each}}
   </div>
@@ -22,7 +22,7 @@
         <h2>New Deck</h2>
         <p class="close">&times;</p>
       </div>
-      <form id="createDeck">
+      <form id="createDeck-form">
         <input type="hidden" id="userId" name="userId" value="{{user.id}}">
     
         <label for="deckName">Deck name:</label>
