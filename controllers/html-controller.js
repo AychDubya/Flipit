@@ -58,7 +58,7 @@ router.get("/search", async function (req, res) {
           CategoryId: parseInt(category),
         },
         attributes: { 
-          include: [[Sequelize.fn("COUNT", Sequelize.col("cards.id")), "cardCount"]] 
+          include: [[Sequelize.fn("COUNT", Sequelize.col("Cards.id")), "cardCount"]] 
         },
         include: [
           {
@@ -78,7 +78,7 @@ router.get("/search", async function (req, res) {
           name: deck,
         },
         attributes: { 
-          include: [[Sequelize.fn("COUNT", Sequelize.col("cards.id")), "cardCount"]] 
+          include: [[Sequelize.fn("COUNT", Sequelize.col("Cards.id")), "cardCount"]] 
         },
         include: [
           {
@@ -98,7 +98,7 @@ router.get("/search", async function (req, res) {
           CategoryId: parseInt(category),
         },
         attributes: { 
-          include: [[Sequelize.fn("COUNT", Sequelize.col("cards.id")), "cardCount"]] 
+          include: [[Sequelize.fn("COUNT", Sequelize.col("Cards.id")), "cardCount"]] 
         },
         include: [
           {
@@ -115,7 +115,7 @@ router.get("/search", async function (req, res) {
     } else if (!category && !deck) {
       return await db.Deck.findAll({
         attributes: { 
-          include: [[Sequelize.fn("COUNT", Sequelize.col("cards.id")), "cardCount"]] 
+          include: [[Sequelize.fn("COUNT", Sequelize.col("Cards.id")), "cardCount"]] 
         },
         include: [
           {
