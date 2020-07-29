@@ -1,16 +1,24 @@
 <div class="card">
+  <h3><strong>{{data}}</strong></h3>
   <div class="studycard">
-    <div class="front">
-      Front content
-      <h2 id="question"></h2>
+    <div class="front sc-section">
+      <p>Front</p>
+      <div class="user-content-holder">
+        <h2 id="question"></h2>
+      </div>
     </div>
-    <div class="back">
-      Back content
-      <h2 id="answer"></h2>
+    <div class="back sc-section">
+      <p>Back</p>
+      <div class="user-content-holder">
+        <h2 id="answer"></h2>
+      </div>
     </div>
   </div>
-  <button id="previous">Previous Card</button>
-  <button id="next">Next Card</button>
+  <div class="control-buttons">
+    <button id="previous">Previous Card</button>
+    <h4 class="count-display">1/4</h4>
+    <button id="next">Next Card</button>
+  </div>
 
 
 </div>

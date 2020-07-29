@@ -320,12 +320,12 @@ router.get("/deck/:id", function (req, res) {
 
 // Study page
 router.get("/study/:deckId", function (req, res) {
-  db.Card.findAll({
+  db.Deck.findOne({
     where: {
-      DeckId: req.params.deckId,
+      id: req.params.deckId,
     }
-  }).then(function (cards) {
-    res.render("study", sessionObject(req, cards.map(card => card.toJSON())));
+  }).then(function (deck) {
+    res.render("study", sessionObject(req, deck.name));
   });
 });
 
