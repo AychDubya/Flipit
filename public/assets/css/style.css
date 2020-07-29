@@ -106,6 +106,7 @@ footer {
 }
 footer p {
   margin-bottom: 0px;
+  text-decoration: none;
 }
 
 .editFlashcards-container {
@@ -219,6 +220,7 @@ footer p {
 }
 .modal-header p {
   flex: 1;
+
 }
 
 /* The Close Button */
@@ -226,7 +228,9 @@ footer p {
   color: #aaaaaa;
   float: right;
   font-size: 28px;
+  margin-bottom: 20px;
   font-weight: bold;
+  text-align: center;
 }
 
 .close:hover,

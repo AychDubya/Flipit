@@ -132,7 +132,6 @@ router.get("/search", async function (req, res) {
     }
   })();
   if (results[0].id) {
-    console.log("results exsist")
     const parsedResults = results.filter(item => {
       if (item.private) {
         if (item.CreatorId === req.session.id) return true;
@@ -178,8 +177,12 @@ router.get("/search", async function (req, res) {
 });
 
 // Profile page
-router.get("/profile", function (req, res) {
+router.get("/profile", async function (req, res) {
   console.log("run profile route");
+  const allCats = await db.Category.findAll();
+  const allCatsParsed = allCats.map(cat => {
+    return { id: cat.id, name: cat.name };
+  });
 
   if(req.session.user){
     db.User.findOne({
@@ -211,7 +214,11 @@ router.get("/profile", function (req, res) {
             userId: req.session.user.id,
           });
         }
-        res.render("profile", sessionObject(req, decks));
+        const pageData = {
+          decks: decks,
+          categories: allCatsParsed,
+        }
+        res.render("profile", sessionObject(req, pageData));
       });
     });
   } else {
