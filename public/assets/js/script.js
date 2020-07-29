@@ -157,4 +157,15 @@ $("#delete-user").click(function(event) {
   }
 })
 
+// ! Navbar 
+
+$("#nav-menu").click(function(event) {
+  event.preventDefault();
+  var x = document.getElementById("navbar");
+  if (x.className === "navbar") {
+    x.className += " responsive";
+  } else {
+    x.className = "navbar";
+  }
+})
 
