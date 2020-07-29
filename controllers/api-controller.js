@@ -46,8 +46,8 @@ const nodemailer = require("nodemailer");
                   var mailOptions = {
                     from: 'FlipItStudy@gmail.com',
                     to: `${req.body.email}`,
-                    subject: 'Sending Email using Node.js',
-                    text: 'Thank you for using FlipIt to study! Get started learning'
+                    subject: `Welcome to FlipIt, ${dbUser.username}`,
+                    text: `Thank you for signing up to use FlipIt to study! Get started learning now at https://flipitstudy.herokuapp.com/.`,
                   };
                   
                   transporter.sendMail(mailOptions, function(error, info){
