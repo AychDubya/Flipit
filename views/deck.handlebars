@@ -9,7 +9,9 @@
         <a href="/study/{{data.deck.id}}">
           <button class="button">Study</button>
         </a>
-        <button class="button star-deckPg-btn" data-id="{{data.deck.id}}">Star</button>
+        {{#if (and data.currentUserId data.notStarred)}}
+        <button class="button star-deckPg-btn" data-deck="{{data.deck.id}}" data-user="{{data.currentUserId}}">Star</button>
+        {{/if}}
         {{#if (equals data.creator.id user.id)}}
         <button class="button delete-deckPg-btn" data-id="{{data.deck.id}}">Delete deck</button>
         {{/if}}

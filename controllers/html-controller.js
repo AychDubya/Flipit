@@ -6,7 +6,6 @@ const _ = require("lodash");
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 const Sequelize = require("sequelize");
-const { where } = require("sequelize");
 const Op = Sequelize.Op;
 
 function sessionObject(req, data = {}) {
@@ -47,6 +46,8 @@ router.get(["/", "/index", "/home"], function (req, res) {
 router.get("/search", async function(req, res) {
   // Get search terms
   const { deck, category } = req.query;
+  // Get userId if logged in
+  const userId = req.session.user ? req.session.user.id : "";
   // Get all categories
   const allCats = await db.Category.findAll();
   const allCatsParsed = allCats.map(cat => {
@@ -60,10 +61,15 @@ router.get("/search", async function(req, res) {
   db.Deck.findAll({
     where: whereObj,
   }).then(async function(deckResults) {
+    const publicDecks = deckResults.filter(deck => {
+      if (!deck.private || deck.CreatorId === userId) {
+        return deck;
+      }
+    });
     const creatorPromises = [];
     const countPromises = [];
     // Get creator info and card count for each deck as promises
-    for (const deck of deckResults) {
+    for (const deck of publicDecks) {
       creatorPromises.push(await db.User.findOne({
         where: { id: deck.CreatorId },
       }));
@@ -74,12 +80,10 @@ router.get("/search", async function(req, res) {
     // Wait for all promises to resolve
     const creators = await Promise.all(creatorPromises);
     const cardCounts = await Promise.all(countPromises);
-    // Get userId if logged in to display delete button on each owned deck
-    const userId = req.session.user ? req.session.user.id : "";
     // Create array that combines all info for each deck
-    const results = Array.from({length: deckResults.length}, (val, index) => {
+    const results = Array.from({length: publicDecks.length}, (val, index) => {
       const resultItem = {
-        deck: deckResults[index].toJSON(),
+        deck: publicDecks[index].toJSON(),
         creator: creators[index].toJSON(),
         cardCount: cardCounts[index],
         userId: userId,
@@ -232,6 +236,7 @@ router.get("/deck/:id", function (req, res) {
               id: deck.id,
               createdAt: formatDate(deck.createdAt),
             },
+            currentUserId: userId,
             creator: deck.Users[0].toJSON(),
             cards: deckCards.map(card => {
               const cardObj = card.toJSON();
@@ -240,7 +245,23 @@ router.get("/deck/:id", function (req, res) {
               return cardObj
             }),
           };
-          res.render("deck", sessionObject(req, deckData));
+
+          if (userId) {
+            db.User.findOne({
+              where: {
+                id: userId,
+              }
+            }).then(function(user) {
+              user.getDecks().then(function(userDecks) {
+                const mappedDecks = userDecks.map(deck => deck.id);
+                const notStarred  = !mappedDecks.includes(deckData.deck.id);
+                deckData.notStarred = notStarred;
+                res.render("deck", sessionObject(req, deckData));
+              })
+            })
+          } else {
+            res.render("deck", sessionObject(req, deckData));
+          }
         })
       }
     } else {
