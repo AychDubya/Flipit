@@ -1,40 +1,10 @@
-{{!-- <nav class="navbar">
-  <ul>
-      <li>
-        <a href="/"><h3 class="nav-logo">Flip It</h3></a> 
-      </li>
-      <div class="nav-links">
-        <li>
-          <a href="/">Search</a> 
-        </li>
-        <li>
-          <a href="/team">Dev Team</a>
-        </li>
-        {{#if user.id}}
-        <li>
-          <a href="/profile" tabindex="-1" aria-disabled="true">My Account</a>
-        </li>
-        <li id="logout">
-          <a href="/" tabindex="-1" aria-disabled="true">Log Out</a>
-        </li>
-        {{else}}
-        <li>
-          <a href="/login" tabindex="-1" aria-disabled="true">Login</a>
-        </li>
-        <li>
-          <a href="/register" tabindex="-1" aria-disabled="true">Register</a>
-        </li>
-        {{/if}}
-      </div>
-  </ul>
-</nav> --}}
 <nav class="navbar" id="navbar">
   <a class="nav-logo" href="/">Flip It</a> 
   <a href="/">Search</a>
   <a href="/team">Dev Team</a>
   {{#if user.id}}
   <a href="/profile">My Account</a>
-  <a href="/">Log Out</a>
+  <a href="/logout">Log Out</a>
   {{else}}
   <a href="/login">Login</a>
   <a href="/register">Register</a>
@@ -43,13 +13,3 @@
     <i class="fa fa-bars"></i>
   </a>
 </nav>
-
-{{!-- <div class="topnav" id="myTopnav">
-  <a href="#home" class="active">Home</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact</a>
-  <a href="#about">About</a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i class="fa fa-bars"></i>
-  </a>
-</div> --}}
