@@ -6,6 +6,7 @@ const _ = require("lodash");
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 const Sequelize = require("sequelize");
+const { where } = require("sequelize");
 const Op = Sequelize.Op;
 
 function sessionObject(req, data = {}) {
@@ -43,6 +44,34 @@ router.get(["/", "/index", "/home"], function (req, res) {
   });
 });
 
+async function getSearchResults(res, deck, category) {
+  const whereObj = {};
+  if (deck) whereOnj.name = deck;
+  if (category) whereObj.CategoryId = parseInt(category);
+  db.Deck.findAll({
+    where: whereObj,
+  }).then(function(result) {
+    res.json(result);
+  }).catch(function (err) {
+    res.status(500).json(err)
+  })
+}
+
+router.get("/newSearch", async function(req, res) {
+  const { deck, category } = req.query;
+  const whereObj = {};
+  if (deck) whereOnj.name = deck;
+  if (category) whereObj.CategoryId = parseInt(category);
+
+  db.Deck.findAll({
+    where: whereObj,
+  }).then(function(result) {
+    res.json(result);
+  }).catch(function (err) {
+    res.status(500).json(err)
+  })
+})
+
 // Search Results page
 router.get("/search", async function (req, res) {
   const { deck, category } = req.query;
@@ -60,6 +89,7 @@ router.get("/search", async function (req, res) {
         attributes: { 
           include: [[Sequelize.fn("COUNT", Sequelize.col("Cards.id")), "cardCount"]] 
         },
+        group: ["Cards.id"],
         include: [
           {
             model: db.User,
