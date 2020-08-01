@@ -1,4 +1,5 @@
 $(".studycard").flip();
+
 $("#viewDecks").click(function(event){
     let id= $(this).data("id")
     location.href=`/deck/${id}`
@@ -18,20 +19,28 @@ if (cardData[cardData.length - 2] === "study") {
     
         $("#next").click(function(event){
             if (counter + 1 < cardCount) {
-                counter++
-                $("#question").text(data[counter].question)
-                $("#answer").text(data[counter].answer)
-                $(".count-display").text(`${counter + 1}/${cardCount}`);
+                $("#answer").text("");
+                $(".studycard").flip(false);
+                setTimeout(function(){
+                    counter++
+                    $("#question").text(data[counter].question)
+                    $("#answer").text(data[counter].answer)
+                    $(".count-display").text(`${counter + 1}/${cardCount}`);
+                }, 200);
             }
         })
     
         $("#previous").click(function(event){
             if (counter + 1 > 1) {
-                counter--
-                $("#question").text(data[counter].question)
-                $("#answer").text(data[counter].answer)
-                $(".count-display").text(`${counter + 1}/${cardCount}`);
-            }
+                $("#answer").text("");
+                $(".studycard").flip(false);
+                setTimeout(function(){
+                        counter--
+                        $("#question").text(data[counter].question)
+                        $("#answer").text(data[counter].answer)
+                        $(".count-display").text(`${counter + 1}/${cardCount}`);
+                }, 200);
+            }   
         })
     })
 }
