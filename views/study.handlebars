@@ -1,14 +1,18 @@
+
 <div class="card">
-  <h3><strong>{{data}}</strong></h3>
-  <div class="studycard">
+  <div class="container viewDecks">
+  <h3 id="cardtitle"><strong>{{data.name }}</strong></h3>
+  <button id="viewDecks"  data-id="{{data.id}}">View Decks</button>
+  </div>
+  <div id="usertext" class="studycard">
     <div class="front sc-section">
-      <p>Front</p>
+      <p>Question</p>
       <div class="user-content-holder">
         <h2 id="question"></h2>
       </div>
     </div>
     <div class="back sc-section">
-      <p>Back</p>
+      <p>Answer</p>
       <div class="user-content-holder">
         <h2 id="answer"></h2>
       </div>
@@ -19,6 +23,5 @@
     <h4 class="count-display">1/4</h4>
     <button id="next">Next Card</button>
   </div>
-
 
 </div>

@@ -1,7 +1,6 @@
 body {
-  background-color: #EE7575;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='100' y1='33' x2='100' y2='-3'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='100' y1='135' x2='100' y2='97'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='%23ca6363' fill-opacity='0.6'%3E%3Crect x='100' width='100' height='100'/%3E%3Crect y='100' width='100' height='100'/%3E%3C/g%3E%3Cg fill-opacity='0.5'%3E%3Cpolygon fill='url(%23a)' points='100 30 0 0 200 0'/%3E%3Cpolygon fill='url(%23b)' points='100 100 0 130 0 100 200 100 200 130'/%3E%3C/g%3E%3C/svg%3E");
-}
+  background-color: #CA4D7D;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='100' y1='33' x2='100' y2='-3'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='100' y1='135' x2='100' y2='97'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='%23ac416a' fill-opacity='0.6'%3E%3Crect x='100' width='100' height='100'/%3E%3Crect y='100' width='100' height='100'/%3E%3C/g%3E%3Cg fill-opacity='0.5'%3E%3Cpolygon fill='url(%23a)' points='100 30 0 0 200 0'/%3E%3Cpolygon fill='url(%23b)' points='100 100 0 130 0 100 200 100 200 130'/%3E%3C/g%3E%3C/svg%3E");}
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto', sans-serif;
 }
@@ -16,18 +15,24 @@ p, a {
 }
 
 p {
-  color: slategray;
+  color: black;
 }
 a {
   text-decoration: none;
-  color: black;
+  color:blue
+}
+
+button, .button, button, input[type='button'], input[type='reset'], input[type='submit']{
+  color: white;
+  background-color: rgb(172, 85, 118);
+  border: 0.1rem solid rgb(172, 85, 118);
+
 }
 /* * Navbar */
 .navbar {
-  background-image: url("/assets/images/flsh_strip.jpg");
+  background-color:slategray;
   overflow: hidden;
-  display: flex;
-  align-items: center;
+ 
 }
 #nav-menu {
   font-size: 2em;
@@ -44,10 +49,17 @@ a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  
+}
+.navlinks{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 79px;
 }
 
 .navbar a:hover {
-  background-color: #ab5dda;
+  background-color: rgb(172, 85, 118);
   color: #f2f2f2;
 }
 
@@ -71,13 +83,13 @@ a {
   padding: 50px;
   border-radius: 8px;
   box-shadow: 0 0 30px -5px hsla(0,0%,60.8%,.45);
-  margin-bottom: 3px;
+  margin-bottom: 35px;
   margin-top: 25px;
 }
 
 .front, .back {
   padding: 10px;
-  background-color: white;
+  background-image: url("../images/flashcard.jpg");
   border-radius: 8px;
   box-shadow: 0 0 30px -5px hsla(0,0%,60.8%,.45);
   margin-bottom: 10px;
@@ -110,11 +122,14 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: salmon;
+  background-color: slategray;
 }
 footer p {
   margin-bottom: 0px;
   text-decoration: none;
+}
+#footerlink{
+  color: white;
 }
 
 .editFlashcards-container {
@@ -154,11 +169,19 @@ footer p {
   max-height: auto;
   max-width: 25%;
 }
-
+.deck-list-container {
+  display: flex;
+  flex-wrap: wrap;
+}
 .deck-container {
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 30px -5px hsla(0,0%,60.8%,.45);
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .deck-container p {
   margin-bottom: 15px;
@@ -171,6 +194,10 @@ footer p {
 }
 .deck-container h5 {
   margin-bottom: 5px;
+}
+.deck-container button {
+  width: 85px;
+  padding: 0;
 }
 
 .deckPg-header {
@@ -193,7 +220,11 @@ footer p {
   display: flex;
   justify-content: center;
 }
-
+.viewDecks{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
 /* ! MODAL CSS */
 /* The Modal (background) */
 .modal {
@@ -228,8 +259,29 @@ footer p {
 }
 .modal-header p {
   flex: 1;
-
 }
+
+/* Profile page */
+.profilePg-header {
+  display: flex;
+}
+.profilePg-info {
+  flex: 4;
+}
+.profilePg-info p {
+  margin-bottom: 10px;
+}
+.profilePg-buttons {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.profilePg-buttons button {
+  width: 125px;
+  padding: 0;
+}
+
 
 /* The Close Button */
 .close {
@@ -252,6 +304,7 @@ footer p {
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
+  padding: 0 2.0rem;
 }
 
 .sc-section p {
@@ -260,6 +313,18 @@ footer p {
 
 .studycard {
   height: 300px;
+  font-size: x-large;
+}
+
+#cardtitle {
+  color: black;
+}
+
+#usertext {
+  font-size: 2.75rem;
+  line-height: 2;
+  letter-spacing:inherit;
+  color: black;
 }
 
 .user-content-holder {
@@ -270,20 +335,21 @@ footer p {
 }
 
 @media screen and (max-width: 600px) {
-  .navbar {
+  .navlinks {
     display: block;
+    height: auto;
   }
   a.nav-logo:hover {
     background-color: transparent;
   }
-  .navbar a:not(:first-child) {
+  .navlinks a {
     display: none;
   }
   .navbar a.icon {
     float: right;
     display: block;
   }
-  .navbar.responsive {
+  .navlinks.responsive {
     position: relative;
   }
   .navbar.responsive a.icon {
@@ -314,5 +380,14 @@ footer p {
   .control-buttons button {
     padding-left: 15px;
     padding-right: 15px;
+  }
+  
+  .control-buttons,
+  .viewDecks {
+    padding: 0rem;
+  }
+
+  .user-content-holder {
+    font-size: 1rem;
   }
 }

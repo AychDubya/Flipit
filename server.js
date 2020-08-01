@@ -30,6 +30,9 @@ hbs.handlebars.registerHelper('addOne', function(value) {
 hbs.handlebars.registerHelper('equals', function(a, b) {
   return a == b;
 })
+hbs.handlebars.registerHelper('and', function(a, b) {
+  return a && b;
+})
 
 // * Routes
 app.get("/seeding",(req,res)=>{

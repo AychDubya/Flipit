@@ -169,3 +169,10 @@ $("#nav-menu").click(function(event) {
   }
 })
 
+// ! Star
+$(".star-deckPg-btn").click(function(event) {
+  let deckId = $(this).data("deck");
+  let userId = $(this).data("user");
+  console.log(deckId, userId)
+})
+

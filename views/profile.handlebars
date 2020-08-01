@@ -1,19 +1,21 @@
   <div class="card">
-    <div class="profile-header">
-      <div class="profile-info">
+    <div class="profilePg-header">
+      <div class="profilePg-info">
         <h2>Hello, {{ user.username }}</h2>
         <p>Joined: {{ user.createdAt }}</p>
       </div>
-      <div class="profile-buttons">
+      <div class="profilePg-buttons">
         <button class="button" id="create-deck">New Deck</button>
         <button class="button" id="delete-user" data-id="{{user.id}}">Delete account</button>
       </div>
     </div>
     <hr>
     <h3>Saved Decks:</h3>
-    {{#each data.decks}}
-      {{>deckContainer name=this.deck.name creatorUn=this.creator.username creatorId=this.creator.id userId=this.userId deckId=this.deck.id count=this.deck.cardCount date=this.deck.createdAt}}
-    {{/each}}
+    <div class="deck-list-container emulated-flex-gap">
+      {{#each data.decks}}
+        {{>deckContainer name=this.deck.name creatorUn=this.creator.username creatorId=this.creator.id userId=this.userId deckId=this.deck.id count=this.deck.cardCount date=this.deck.createdAt}}
+      {{/each}}
+    </div>
   </div>
   <!-- The Modal -->
   <div id="newDeck-modal" class="modal">
