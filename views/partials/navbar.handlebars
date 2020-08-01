@@ -1,14 +1,16 @@
 <nav class="navbar" id="navbar">
-  <a class="nav-logo" href="/">Flip It</a> 
-  <a href="/">Search</a>
-  <a href="/team">Dev Team</a>
-  {{#if user.id}}
-  <a href="/profile">My Account</a>
-  <a href="/logout">Log Out</a>
-  {{else}}
-  <a href="/login">Login</a>
-  <a href="/register">Register</a>
-  {{/if}}
+  <a class="nav-logo" href="/">Flip It</a>
+  <div class="navlinks">
+    <a href="/">Search</a>
+    <a href="/team">Dev Team</a>
+    {{#if user.id}}
+    <a href="/profile">My Account</a>
+    <a href="/logout">Log Out</a>
+    {{else}}
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+    {{/if}}
+  </div>
   <a href="javascript:void(0);" id="nav-menu" class="icon">
     <i class="fa fa-bars"></i>
   </a>

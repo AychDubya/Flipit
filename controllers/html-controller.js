@@ -277,7 +277,7 @@ router.get("/study/:deckId", function (req, res) {
       id: req.params.deckId,
     }
   }).then(function (deck) {
-    res.render("study", sessionObject(req, deck.name));
+    res.render("study", sessionObject(req, deck.toJSON()));
   });
 });
 
