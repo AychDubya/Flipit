@@ -1,5 +1,8 @@
 $(".studycard").flip();
-
+$("#viewDecks").click(function(event){
+    let id= $(this).data("id")
+    location.href=`/deck/${id}`
+})
 let cardData = location.href.split("/");
 let deckIndx = cardData[cardData.length - 1];
 let counter = 0;
