@@ -9,6 +9,9 @@
         <a href="/study/{{data.deck.id}}">
           <button class="button">Study</button>
         </a>
+        {{#if (and data.currentUserId data.notStarred)}}
+        <button class="button star-deckPg-btn" data-deck="{{data.deck.id}}" data-user="{{data.currentUserId}}">Star</button>
+        {{/if}}
         {{#if (equals data.creator.id user.id)}}
         <button class="button delete-deckPg-btn" data-id="{{data.deck.id}}">Delete deck</button>
         {{/if}}
@@ -17,9 +20,10 @@
     <hr>
 
     <div class="editFlashcards-container">
+      {{#if (equals data.creator.id user.id)}}
       <div class="editFlashcard" id="new-card">
         <div class="editFlashcards-header">
-          <h3>New Card</h3>  
+          <h3>New Card</h3>
           <div>
             <button class="save-newcard" disabled data-id="{{data.deck.id}}">Save</button>
             <button class="edit-newcard" data-id="{{data.deck.id}}">Add Card</button>
@@ -28,35 +32,38 @@
         <div class="editFlashcards-body emulated-flex-gap">
           <div>
             <h4>Question:</h4>
-            <input class="question-edit" id="newquestion" type="text" value={{question}}>
+            <input class="question-edit" id="newquestion" type="text" value="{{question}}">
           </div>
           <div>
             <h4>Answer:</h4>
-            <input class="answer-edit" id="newanswer" type="text" value={{answer}}>
+            <input class="answer-edit" id="newanswer" type="text" value="{{answer}}">
           </div>
         </div>
       </div>
+      {{/if}}
 
       {{#each data.cards}}
       <div class="editFlashcard" id="card-{{id}}">
         <div class="editFlashcards-header">
           <h3>Card {{addOne @index}}</h3>  
+          {{#if (equals deckCreator currentUser)}}
           <div>
             <button class="save-card" disabled data-id="{{id}}">Save</button>
             <button class="edit-card" data-id="{{id}}">Edit</button>
             <button class="delete-card" data-id="{{id}}">Delete</button>
           </div>
+          {{/if}}
         </div>
         <div class="editFlashcards-body emulated-flex-gap">
           <div>
             <h4>Question:</h4>
             <p class="question-display">{{question}}</p>
-            <input class="question-edit" type="text" value={{question}}>
+            <input class="question-edit" type="text" value="{{question}}">
           </div>
           <div>
             <h4>Answer:</h4>
             <p class="answer-display">{{answer}}</p>
-            <input class="answer-edit" type="text" value={{answer}}>
+            <input class="answer-edit" type="text" value="{{answer}}">
           </div>
         </div>
       </div>

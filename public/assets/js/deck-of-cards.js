@@ -30,9 +30,10 @@ $(function () {
 
     $(".save-card").click(function (event) {
         let id = $(this).data("id");
-
+        console.log("waz happnin");
         let question = $(`#card-${id} .question-edit`).val();
         let answer = $(`#card-${id} .answer-edit`).val();
+        console.log(question, answer);
 
 
         let editedCard = {

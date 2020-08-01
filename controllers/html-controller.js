@@ -43,142 +43,73 @@ router.get(["/", "/index", "/home"], function (req, res) {
   });
 });
 
-// Search Results page
-router.get("/search", async function (req, res) {
+router.get("/search", async function(req, res) {
+  // Get search terms
   const { deck, category } = req.query;
+  // Get userId if logged in
+  const userId = req.session.user ? req.session.user.id : "";
+  // Get all categories
   const allCats = await db.Category.findAll();
   const allCatsParsed = allCats.map(cat => {
     return { id: cat.id, name: cat.name };
   });
-  const results = await (async function() {
-    if (deck && category) {
-      return await db.Deck.findAll({
-        where: {
-          name: deck,
-          CategoryId: parseInt(category),
-        },
-        attributes: { 
-          include: [[Sequelize.fn("COUNT", Sequelize.col("Cards.id")), "cardCount"]] 
-        },
-        include: [
-          {
-            model: db.User,
-            where: {
-              id: {
-                [Op.col]: "Deck.CreatorId"
-              }
-            }
-          },
-          { model: db.Card, },
-        ],
-      });
-    } else if (deck && !category) {
-      return await db.Deck.findAll({
-        where: {
-          name: deck,
-        },
-        attributes: { 
-          include: [[Sequelize.fn("COUNT", Sequelize.col("Cards.id")), "cardCount"]] 
-        },
-        include: [
-          {
-            model: db.User,
-            where: {
-              id: {
-                [Op.col]: "Deck.CreatorId"
-              }
-            }
-          },
-          { model: db.Card, },
-        ],
-      });
-    } else if (category && !deck) {
-      return await db.Deck.findAll({
-        where: {
-          CategoryId: parseInt(category),
-        },
-        attributes: { 
-          include: [[Sequelize.fn("COUNT", Sequelize.col("Cards.id")), "cardCount"]] 
-        },
-        include: [
-          {
-            model: db.User,
-            where: {
-              id: {
-                [Op.col]: "Deck.CreatorId"
-              }
-            }
-          },
-          { model: db.Card, },
-        ],
-      });
-    } else if (!category && !deck) {
-      return await db.Deck.findAll({
-        attributes: { 
-          include: [[Sequelize.fn("COUNT", Sequelize.col("Cards.id")), "cardCount"]] 
-        },
-        include: [
-          {
-            model: db.User,
-            where: {
-              id: {
-                [Op.col]: "Deck.CreatorId"
-              }
-            }
-          },
-          { model: db.Card, },
-        ],
-      });
-    }
-  })();
-  if (results[0].id) {
-    const parsedResults = results.filter(item => {
-      if (item.private) {
-        if (item.CreatorId === req.session.id) return true;
-        else return false;
-      } else {
-        return true;
+  // Create where object for query based on search terms
+  const whereObj = {};
+  if (deck) whereObj.name = deck;
+  if (category) whereObj.CategoryId = category ? parseInt(category) : "";
+  // Find all decks
+  db.Deck.findAll({
+    where: whereObj,
+  }).then(async function(deckResults) {
+    const publicDecks = deckResults.filter(deck => {
+      if (!deck.private || deck.CreatorId === userId) {
+        return deck;
       }
-    }).map(item => {
-      return {
-        deck: {
-          name: item.dataValues.name,
-          id: item.dataValues.id,
-          createdAt: formatDate(item.dataValues.createdAt),
-          cardCount: item.dataValues.cardCount,
-        },
-        creator: item.Users[0].dataValues,
-        userId: req.session.user ? req.session.user.id : "",
-      };
     });
+    const creatorPromises = [];
+    const countPromises = [];
+    // Get creator info and card count for each deck as promises
+    for (const deck of publicDecks) {
+      creatorPromises.push(await db.User.findOne({
+        where: { id: deck.CreatorId },
+      }));
+      countPromises.push(await db.Card.count({
+        where: { DeckId: deck.id },
+      }));
+    }
+    // Wait for all promises to resolve
+    const creators = await Promise.all(creatorPromises);
+    const cardCounts = await Promise.all(countPromises);
+    // Create array that combines all info for each deck
+    const results = Array.from({length: publicDecks.length}, (val, index) => {
+      const resultItem = {
+        deck: publicDecks[index].toJSON(),
+        creator: creators[index].toJSON(),
+        cardCount: cardCounts[index],
+        userId: userId,
+      };
+      resultItem.deck.createdAt = formatDate(resultItem.deck.createdAt);
+      return resultItem;
+    })
+    // Create page data object with results, search terms and categories
     const pageData = {
-      results: parsedResults,
+      results: results,
       search: {
-        resultCount: parsedResults.length,
+        resultCount: results.length,
         deck: deck ? deck : "None",
         category: category ? allCatsParsed[category - 1].name : "None",
       },
       categories: allCatsParsed
     }
-    console.log(pageData);
+    // Render results
     res.render("search", sessionObject(req, pageData));
-  } else {
-    console.log("none exsist")
-    const pageData = {
-      results: [],
-      search: {
-        deck: deck ? deck : "None",
-        category: category ? allCatsParsed[category - 1].name : "None",
-      },
-      categories: allCatsParsed
-    }
-    res.render("search", sessionObject(req, pageData))
-  }
-});
+  }).catch(function (err) {
+    res.status(500).json(err)
+  })
+})
 
 // Profile page
 router.get("/profile", async function (req, res) {
-  console.log("run profile route");
   const allCats = await db.Category.findAll();
   const allCatsParsed = allCats.map(cat => {
     return { id: cat.id, name: cat.name };
@@ -298,17 +229,39 @@ router.get("/deck/:id", function (req, res) {
             DeckId: deck.id,
           }
         }).then(function(deckCards) {
+          const userId = req.session.user ? req.session.user.id : "";
           const deckData = {
             deck: {
               name: deck.name,
               id: deck.id,
               createdAt: formatDate(deck.createdAt),
             },
+            currentUserId: userId,
             creator: deck.Users[0].toJSON(),
-            cards: deckCards.map(card => card.toJSON()),
+            cards: deckCards.map(card => {
+              const cardObj = card.toJSON();
+              cardObj.deckCreator = deck.id;
+              cardObj.currentUser = userId;
+              return cardObj
+            }),
           };
-          console.log(deckData);
-          res.render("deck", sessionObject(req, deckData));
+
+          if (userId) {
+            db.User.findOne({
+              where: {
+                id: userId,
+              }
+            }).then(function(user) {
+              user.getDecks().then(function(userDecks) {
+                const mappedDecks = userDecks.map(deck => deck.id);
+                const notStarred  = !mappedDecks.includes(deckData.deck.id);
+                deckData.notStarred = notStarred;
+                res.render("deck", sessionObject(req, deckData));
+              })
+            })
+          } else {
+            res.render("deck", sessionObject(req, deckData));
+          }
         })
       }
     } else {
