@@ -47,7 +47,7 @@
  ---
 
  ## Contributing:
- ## Please contact anyone from the Derek or Andrew from the Dev Team page
+ ## Please contact Derek or Andrew from the Dev Team page.
 ---
 
  ## Links
