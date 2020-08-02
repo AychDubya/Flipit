@@ -10,14 +10,12 @@
   ![](public/assets/images/flipit.jpg)
 ---
  
-  ## Table of Content
+  ## Table of Contents
   1. [Installation](#Installation)
   2. [Usage](#Usage)
-  3. [License](#License)
-  4. [Contributing](#Contributing)
-  5. [Links](#Links)
-  6. [Tests](#Testing)
-  7. [Email](#Contact)
+  3. [Contributing](#Contributing)
+  4. [Links](#Links)
+  5. [Email](#Contact)
   
   ---
 
