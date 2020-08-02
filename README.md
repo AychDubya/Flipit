@@ -69,8 +69,8 @@
   ### derek.watson92@gmail.com
 
 ---
-### Back to the top:
-  [FlipIt](#FlipIt)
+### 
+  [Back to the top](#FlipIt)
 ### or check out the app: https://flipitstudy.herokuapp.com/
   
   
