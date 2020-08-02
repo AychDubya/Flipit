@@ -5,7 +5,7 @@
 ---
   
   ## Project Description:
-  ### FlipIt is an interactive flashcard app where users will create an account then sign in to study flashcards covering material from a variety of subjects.
+  ### FlipIt is an interactive app where users can have the convenience of flashcards in their pocket! Just open the app and start studying.
 
   ![](public/assets/images/flipit.jpg)
 ---
