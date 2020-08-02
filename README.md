@@ -1,13 +1,84 @@
-# Project_2_FlipIt!
-Welcome to FlipIt! Brought to you by Andrew, Hannibal (gitmaster), Derek and Mike (project manager).
-FlipIt is an interactive flashcard app where users will create an account then sign in to study flashcards covering material from a variety of subjects. 
-We wanted to build a stylish app for knowledge using flashcards, a highly effective study tool. This app is intended for use by students but ANYONE can benefit from it! 
-Our MVP for this project was to create an application that will: 1) Allow users to create a profile, 2) allow users to create decks which they can add cards to, and 3) Allow users to search by deck name. When they create account, users will receive a welcome email in their inbox with a message containing a link to the deployed site where they can begin the FlipIt experience
-After the user logs in, they are taken to their account page and greeted by “Hello (username)” text in the header, where they can create a new deck or delete their account. While they create a new deck, a box appears to let the user input the deck name and select a subject. The user is also given the option to make the deck public with a checkbox in the lower right-hand side of the screen. 
-After clicking create, the empty deck appears in the bottom of the container. 
-Clicking “study” allows users to review the flashcards. “View” allows them to create new flashcards for the deck. And… “Delete” allows the user to delete the deck if they are no longer using it. The newly created deck will now be searchable on the main page…. if the user opted to make it public. Once the user has created their deck, and wants to see the wonderful team who created the app, they can click on “Dev Team” on the top nav bar for a brief bio of our team.
-From the main page, the user may search for a public flashcard deck to study by clicking on a suggestion box or search manually using the search field and dropdown box. They can also create an account or sign into an existing one for a more personalized experience.
+  # FlipIt
+### Deployed link: https://flipitstudy.herokuapp.com/
+  ## Project Creator: 
+  ### Andrew, Derek, Hannibal, Mike
+---
+  
+  ## Project Description:
+  ### FlipIt is an interactive flashcard app where users will create an account then sign in to study flashcards covering material from a variety of subjects.
+
+  ![](public/assets/images/flipit.jpg)
+---
+ 
+  ## Table of Content
+  1. [Installation](#Installation)
+  2. [Usage](#Usage)
+  3. [License](#License)
+  4. [Contributing](#Contributing)
+  5. [Links](#Links)
+  6. [Tests](#Testing)
+  7. [Email](#Contact)
+  
+  ---
+
+  ## Installation:
+  ## Developers please see the package.json file and then run NPM install on your command line.
+
+  ---      
+
+  ## Usage:
+
+  * Starting on the home page anyone can use the search by deck bar or select a category from the drop. Alternatively anyone can just click search and look through all decks.
+    * After running the search from the main page, you will see decks populate below. Now you may chose to study a deck of cards or view the deck of cards. 
+    * If you select view, you will be taken to a screen that displays all cards within that specific deck, their questions and their answers. 
+  
+  * Users may create their own deck of study cards but only if they have an account. 
+  * If the user does not have an account they will need to follow the Register link on the top right of the page and fill out the Create New Account form. 
+  * Once the user has created an account they will need to log in. After logging in the new users dashboard will show no decks of study cards. 
+    * You will need to click new deck, give that deck a name, and assign it to a category. Once the new deck is created, it will show up in the users dashboard. 
+    * Now they will need to click view on the deck. From here you will need select add card, and then fill out the question and answer. 
+    * Save your new cards and prepare to study. On the top right you will see a Study button, select study and test your knowledge. 
+  * Once you are done studying you can click my account to go back to your dashboard, Search will bring you back to the homepage where you can see all other Decks created, and don't forget to stop by the Dev Team page to see who the masterminds of FlipIt are!
+
+  ---
+  ## License:
+ N/A
+ 
+ ---
+
+ ## Contributing:
+ ## Please contact anyone from the Derek or Andrew from the Dev Team page
+---
+
+ ## Links
+
+  * linkedIn: 
+    * Andrew Bergstrom: https://www.linkedin.com/in/andrew-bergstrom-74a79aa4/ 
+    * Derek Watson: https://www.linkedin.com/in/watsonderek/ 
+    * Mike Shenk: https://www.linkedin.com/in/michaelshenk415/ 
+
+        
+  * Github:
+    * FlipIt: https://github.com/AychDubya/Flipit
+    * Andrew Bergstrom: https://github.com/AndrewBergstrom 
+    * Derek Watson: https://github.com/derek-watson14 
+    * Mike Shenk: https://github.com/mlshenk 
+    * Hannibal Wyman: https://github.com/AychDubya  
 
 
-Deployed link: https://flipitstudy.herokuapp.com/
-GitHub repo: https://github.com/AychDubya/Flipit
+  ---
+
+  ## Testing:
+  ## N/A
+
+  ---
+
+  ## Contact
+ 
+  ## If you have any questions, contact the author directly at: 
+  ### Andrew.Bergstrom88@gmail.com 
+  ### derek.watson92@gmail.com
+  
+
+
+
