@@ -171,6 +171,10 @@ $("#nav-menu").click(function(event) {
 
 // ! Star
 $(".star-deckPg-btn").click(function(event) {
+  // $.ajax({
+  //   url: "/api/star_deck",
+  //   method: "POST",
+  // })
   let deckId = $(this).data("deck");
   let userId = $(this).data("user");
   console.log(deckId, userId)
