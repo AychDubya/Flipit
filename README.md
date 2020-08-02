@@ -41,11 +41,7 @@
   * Once you are done studying you can click my account to go back to your dashboard, Search will bring you back to the homepage where you can see all other Decks created, and don't forget to stop by the Dev Team page to see who the masterminds of FlipIt are!
 
   ---
-  ## License:
- N/A
  
- ---
-
  ## Contributing:
  ## Please contact Derek or Andrew from the Dev Team page.
 ---
@@ -68,16 +64,17 @@
 
   ---
 
-  ## Testing:
-  ## N/A
-
-  ---
-
   ## Contact
  
   ## If you have any questions, contact the author directly at: 
   ### Andrew.Bergstrom88@gmail.com 
   ### derek.watson92@gmail.com
+
+---
+### Back to the top:
+  [FlipIt](#FlipIt)
+### or check out the app: https://flipitstudy.herokuapp.com/
+  
   
 
 
