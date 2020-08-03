@@ -80,7 +80,7 @@ $("#registerForm").submit(async function(event) {
         else
           return $.Deferred().reject('registerUser').promise();
       }, function() {
-          return 'registerUser';//continue on failure path.
+          return 'registerUser';
       });
     }
 
@@ -103,10 +103,8 @@ $("#registerForm").submit(async function(event) {
     }
 
     registerUser(user).then(() => loginNewUser(user.username, user.password)).then(function() {
-      console.log("Succcess");
       location.href = "/profile";
     }, function(id) {
-      console.log("Failed: ", id);
       location.reload();
     });
   }
