@@ -50,7 +50,7 @@ router.post("/api/users", function (req, res) {
             var mailOptions = {
                 from: 'FlipItStudy@gmail.com',
                 to: `${req.body.email}`,
-                subject: `Welcome to FlipIt, ${dbUser.username}`,
+                subject: `Welcome to FlipIt, ${newUser.username}`,
                 text: `Thank you for signing up to use FlipIt to study! Get started learning now at https://flipitstudy.herokuapp.com/.`,
             };
                 
@@ -62,6 +62,7 @@ router.post("/api/users", function (req, res) {
                 }
             });
         }
+        res.json(newUser);
     }).catch(err => {
         console.log(err);
         return res.status(500).end();
