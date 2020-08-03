@@ -75,10 +75,25 @@ $("#registerForm").submit(async function(event) {
       data: user,
     }).done(function(data) {
       console.log(data);
-      location.href = "/login";
     }).fail(function(err) {
       console.log(err);
       location.reload();
+    })
+
+    $.ajax({
+      url:"/login",
+      method:"POST",
+      data: {
+        username: user.username,
+        password: user.password,
+      }
+    }).done(function(data){
+        console.log(data);
+        location.href = "/profile"
+    }).fail(function(err){
+        console.log(err);
+        location.reload();
+        alert("Username or password incorrect for login");
     })
   }
 })
@@ -171,12 +186,17 @@ $("#nav-menu").click(function(event) {
 
 // ! Star
 $(".star-deckPg-btn").click(function(event) {
-  // $.ajax({
-  //   url: "/api/star_deck",
-  //   method: "POST",
-  // })
-  let deckId = $(this).data("deck");
   let userId = $(this).data("user");
-  console.log(deckId, userId)
+  let deckId = $(this).data("deck");
+  $.ajax({
+    url: `/api/star_deck/${userId}/${deckId}`,
+    method: "POST",
+  }).done(function(data) {
+    console.log(data);
+    location.reload();
+  }).fail(function(err) {
+    console.log(err);
+    location.reload();
+  })
 })
 
