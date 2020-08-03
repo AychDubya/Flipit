@@ -11,7 +11,7 @@ $("#loginForm").submit(function(event){
       data: userObj
   }).done(function(data){
       console.log(data);
-      location.href = "/profile"
+      location.href = "/profile";
   }).fail(function(err){
       console.log(err);
       location.reload();
@@ -69,32 +69,46 @@ $("#registerForm").submit(async function(event) {
   } else if (user.email && !isValidEmail(user.email)) {
     alert("Invalid email address!");
   } else {
-    $.ajax({
-      url: "/api/users",
-      method: "POST",
-      data: user,
-    }).done(function(data) {
-      console.log(data);
-    }).fail(function(err) {
-      console.log(err);
-      location.reload();
-    })
+    function registerUser(user) {
+      return $.ajax({
+        url: "/api/users",
+        method: "POST",
+        data: user,
+      }).then(function(result) {
+        if(result)
+          return result;
+        else
+          return $.Deferred().reject('registerUser').promise();
+      }, function() {
+          return 'registerUser';//continue on failure path.
+      });
+    }
 
-    $.ajax({
-      url:"/login",
-      method:"POST",
-      data: {
-        username: user.username,
-        password: user.password,
-      }
-    }).done(function(data){
-        console.log(data);
-        location.href = "/profile"
-    }).fail(function(err){
-        console.log(err);
-        location.reload();
-        alert("Username or password incorrect for login");
-    })
+    function loginNewUser(username, password) {
+      return $.ajax({
+        url:"/login",
+        method:"POST",
+        data: {
+          username: username,
+          password: password,
+        }
+      }).then(function(result) {
+        if(result)
+          return result;
+        else
+          return $.Deferred().reject('loginNewUser').promise();
+      }, function() {
+          return 'loginNewUser';
+      });
+    }
+
+    registerUser(user).then(() => loginNewUser(user.username, user.password)).then(function() {
+      console.log("Succcess");
+      location.href = "/profile";
+    }, function(id) {
+      console.log("Failed: ", id);
+      location.reload();
+    });
   }
 })
 

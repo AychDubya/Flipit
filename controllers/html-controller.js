@@ -183,7 +183,7 @@ router.post('/login', function (req, res) {
           email: user.email,
           createdAt: formatDate(user.createdAt),
         }
-        res.redirect(`profile`);
+        res.json(user);
       } else {
         res.status(401).send("wrong password");
       }
